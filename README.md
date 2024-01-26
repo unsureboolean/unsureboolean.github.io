@@ -2,6 +2,5 @@
 
 
 To do - 
-> Add titles to links in portfolio
-
-> Change profile icon in header to Headshot.jpg
+> Link to Florida Man Moses project once finished
+> Examples of Sigma stories
