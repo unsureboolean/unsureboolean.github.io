@@ -2,6 +2,6 @@
 
 
 To do - 
- > Link to Florida Man Moses project once finished
+ - Link to Florida Man Moses project once finished
  
- > Examples of Sigma stories
+ - Examples of Sigma stories
