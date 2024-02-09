@@ -2,6 +2,8 @@
 
 
 To do - 
- - Link to Florida Man Moses project once finished
+ - Page and link/icon for Florida Man Moses
  
  - Examples of Sigma stories
+
+ - Expert Insight Consultant report example
