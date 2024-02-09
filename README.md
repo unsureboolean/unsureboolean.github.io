@@ -7,3 +7,7 @@ To do -
  - Examples of Sigma stories
 
  - Expert Insight Consultant report example
+
+ - PersonaZoo examples
+
+ - PersonaZoo webpage chat window?
