@@ -7,15 +7,24 @@
   <title>Jeff Tuel - Personal Website</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Add Font Awesome for hamburger menu icon -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 
 <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
   <!-- Navigation -->
   <header class="bg-blue-900 text-white p-6 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
       <h1 class="text-2xl font-bold">Jeff Tuel</h1>
-      <nav aria-label="Main navigation" class="mt-4 sm:mt-0">
-        <ul class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+      
+      <!-- Mobile menu button -->
+      <button id="mobile-menu-button" class="sm:hidden text-white focus:outline-none" aria-label="Toggle navigation menu">
+        <i class="fas fa-bars text-xl"></i>
+      </button>
+
+      <!-- Navigation for desktop -->
+      <nav id="desktop-nav" class="hidden sm:block">
+        <ul class="flex space-x-6">
           <li><a href="#about" class="hover:text-blue-200 underline-offset-4 hover:underline">About</a></li>
           <li><a href="#experience" class="hover:text-blue-200 underline-offset-4 hover:underline">Experience</a></li>
           <li><a href="#projects" class="hover:text-blue-200 underline-offset-4 hover:underline">Projects</a></li>
@@ -25,6 +34,18 @@
         </ul>
       </nav>
     </div>
+    
+    <!-- Mobile navigation dropdown menu -->
+    <nav id="mobile-nav" class="hidden mt-4 sm:hidden">
+      <ul class="flex flex-col space-y-4">
+        <li><a href="#about" class="block hover:text-blue-200 underline-offset-4 hover:underline">About</a></li>
+        <li><a href="#experience" class="block hover:text-blue-200 underline-offset-4 hover:underline">Experience</a></li>
+        <li><a href="#projects" class="block hover:text-blue-200 underline-offset-4 hover:underline">Projects</a></li>
+        <li><a href="#personal" class="block hover:text-blue-200 underline-offset-4 hover:underline">Personal Life</a></li>
+        <li><a href="#beliefs" class="block hover:text-blue-200 underline-offset-4 hover:underline">Beliefs</a></li>
+        <li><a href="#contact" class="block hover:text-blue-200 underline-offset-4 hover:underline">Contact</a></li>
+      </ul>
+    </nav>
   </header>
 
   <!-- Hero Section -->
@@ -47,7 +68,7 @@
     <div class="max-w-4xl mx-auto">
       <h3 class="text-3xl font-bold mb-6">About</h3>
       <p>
-        I help teams navigate change, solve problems, and build stronger connections. I believe in people-centered leadership and using communication as a tool for real progress. While my background is in tech and consulting, I’m always open to any work that feels grounded and focused on helping real people in meaningful ways. I’m especially drawn to roles where empathy, clarity, and human connection are front and center.
+        I help teams navigate change, solve problems, and build stronger connections. I believe in people-centered leadership and using communication as a tool for real progress. While my background is in tech and consulting, I'm always open to any work that feels grounded and focused on helping real people in meaningful ways. I'm especially drawn to roles where empathy, clarity, and human connection are front and center.
       </p>
     </div>
   </section>
@@ -57,7 +78,7 @@
     <div class="max-w-4xl mx-auto">
       <h3 class="text-3xl font-bold mb-6">Experience</h3>
       <p>
-        Highlights from my previous roles include leading internal product rollouts at Avaya, consulting with cross-functional teams at Slalom, and supporting user adoption at Coastal Cloud. My work has always been rooted in collaboration and clear communication—making complex solutions approachable for everyday users. That skill set is useful both in and outside the tech world, and I’m eager to apply it to any mission-driven environments.
+        Highlights from my previous roles include leading internal product rollouts at Avaya, consulting with cross-functional teams at Slalom, and supporting user adoption at Coastal Cloud. My work has always been rooted in collaboration and clear communication—making complex solutions approachable for everyday users. That skill set is useful both in and outside the tech world, and I'm eager to apply it to any mission-driven environments.
       </p>
     </div>
   </section>
@@ -77,7 +98,7 @@
     <div class="max-w-4xl mx-auto">
       <h3 class="text-3xl font-bold mb-6">Personal Life</h3>
       <p>
-        Outside of work, I enjoy strategy and story-driven games, reading sci-fi and litrpg books, exploring new technology, and spending time with family. I’ve learned the importance of rest and balance, especially in a world that never slows down. Time with my family, a good book, or a night of gaming with friends helps me reset and show up as my best self when it really counts. I'm also constantly bombarded with attention from my pets!
+        Outside of work, I enjoy strategy and story-driven games, reading sci-fi and litrpg books, exploring new technology, and spending time with family. I've learned the importance of rest and balance, especially in a world that never slows down. Time with my family, a good book, or a night of gaming with friends helps me reset and show up as my best self when it really counts. I'm also constantly bombarded with attention from my pets!
       </p>
     </div>
   </section>
@@ -87,7 +108,7 @@
     <div class="max-w-4xl mx-auto">
       <h3 class="text-3xl font-bold mb-6">What I Believe In</h3>
       <p>
-        I believe that great communication can solve almost any problem. I value curiosity, empathy, and the drive to empower teams, organizations, and myself. I’m open to stepping away from corporate tech work if it means contributing to something that actually improves people’s lives.
+        I believe that great communication can solve almost any problem. I value curiosity, empathy, and the drive to empower teams, organizations, and myself. I'm open to stepping away from corporate tech work if it means contributing to something that actually improves people's lives.
       </p>
     </div>
   </section>
@@ -121,6 +142,40 @@
   <footer class="bg-blue-900 text-white text-center p-6 mt-12">
     <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
   </footer>
+
+  <!-- JavaScript for toggling mobile menu -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const mobileMenuButton = document.getElementById('mobile-menu-button');
+      const mobileNav = document.getElementById('mobile-nav');
+      
+      // Toggle mobile menu visibility
+      mobileMenuButton.addEventListener('click', function() {
+        mobileNav.classList.toggle('hidden');
+        
+        // Change icon based on menu state
+        const menuIcon = mobileMenuButton.querySelector('i');
+        if (mobileNav.classList.contains('hidden')) {
+          menuIcon.classList.remove('fa-times');
+          menuIcon.classList.add('fa-bars');
+        } else {
+          menuIcon.classList.remove('fa-bars');
+          menuIcon.classList.add('fa-times');
+        }
+      });
+      
+      // Close menu when clicking a navigation link
+      const mobileNavLinks = mobileNav.querySelectorAll('a');
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          mobileNav.classList.add('hidden');
+          const menuIcon = mobileMenuButton.querySelector('i');
+          menuIcon.classList.remove('fa-times');
+          menuIcon.classList.add('fa-bars');
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
