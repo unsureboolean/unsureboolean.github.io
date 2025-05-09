@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeff Tuel - Personal Website</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+  <!-- Navigation -->
+  <header class="bg-blue-900 text-white p-6 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center text-center sm:text-left">
+      <h1 class="text-2xl font-bold">Jeff Tuel</h1>
+      <nav aria-label="Main navigation" class="mt-4 sm:mt-0">
+        <ul class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-6">
+          <li><a href="#about" class="hover:text-blue-200 underline-offset-4 hover:underline">About</a></li>
+          <li><a href="#experience" class="hover:text-blue-200 underline-offset-4 hover:underline">Experience</a></li>
+          <li><a href="#projects" class="hover:text-blue-200 underline-offset-4 hover:underline">Projects</a></li>
+          <li><a href="#personal" class="hover:text-blue-200 underline-offset-4 hover:underline">Personal Life</a></li>
+          <li><a href="#beliefs" class="hover:text-blue-200 underline-offset-4 hover:underline">Beliefs</a></li>
+          <li><a href="#contact" class="hover:text-blue-200 underline-offset-4 hover:underline">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="bg-blue-100 py-16 sm:py-20">
+    <div class="max-w-6xl mx-auto text-center px-4 sm:px-6">
+      <h2 class="text-2xl sm:text-4xl font-extrabold mb-4">Hi, I'm Jeff Tuel</h2>
+      <p class="text-lg sm:text-xl mb-6">Clear. Focused. People-first.</p>
+      <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+        <a href="Jeff_Tuel_Resume.pdf" download aria-label="Download resume in PDF format"
+          class="bg-blue-900 text-white px-5 py-2 rounded hover:bg-blue-700">Download Resume</a>
+        <a href="https://linkedin.com/in/jeff-tuel" target="_blank" rel="noopener noreferrer"
+          class="bg-white border border-blue-900 text-blue-900 px-5 py-2 rounded hover:bg-blue-100"
+          aria-label="Visit Jeff's LinkedIn profile in a new tab">LinkedIn Profile</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-bold mb-6">About</h3>
+      <p>
+        I help teams navigate change, solve problems, and build stronger connections. I believe in people-centered leadership and using communication as a tool for real progress. While my background is in tech and consulting, I’m always open to any work that feels grounded and focused on helping real people in meaningful ways. I’m especially drawn to roles where empathy, clarity, and human connection are front and center.
+      </p>
+    </div>
+  </section>
+
+  <!-- Experience Section -->
+  <section id="experience" class="bg-gray-100 py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-bold mb-6">Experience</h3>
+      <p>
+        Highlights from my previous roles include leading internal product rollouts at Avaya, consulting with cross-functional teams at Slalom, and supporting user adoption at Coastal Cloud. My work has always been rooted in collaboration and clear communication—making complex solutions approachable for everyday users. That skill set is useful both in and outside the tech world, and I’m eager to apply it to any mission-driven environments.
+      </p>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-bold mb-6">Projects</h3>
+      <p>
+        I have helped design employee onboarding programs, created enablement tools to support marketing and sales teams, and led process improvement initiatives that increased team productivity and reduced friction. I've lead the creation of an AI product from roadmap to launch, led cross-functional teams, and led meetings with VPs and executives from worldwide corporations. Having worked in a variety of positions within a project team has allowed me to better understand what it takes to make things happen.
+      </p>
+    </div>
+  </section>
+
+  <!-- Personal Life Section -->
+  <section id="personal" class="bg-gray-100 py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-bold mb-6">Personal Life</h3>
+      <p>
+        Outside of work, I enjoy strategy and story-driven games, reading sci-fi and litrpg books, exploring new technology, and spending time with family. I’ve learned the importance of rest and balance, especially in a world that never slows down. Time with my family, a good book, or a night of gaming with friends helps me reset and show up as my best self when it really counts. I'm also constantly bombarded with attention from my pets!
+      </p>
+    </div>
+  </section>
+
+  <!-- Beliefs Section -->
+  <section id="beliefs" class="py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-bold mb-6">What I Believe In</h3>
+      <p>
+        I believe that great communication can solve almost any problem. I value curiosity, empathy, and the drive to empower teams, organizations, and myself. I’m open to stepping away from corporate tech work if it means contributing to something that actually improves people’s lives.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="bg-blue-100 py-16 px-4 sm:px-6">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-3xl font-bold mb-6 text-center">Contact Me</h3>
+      <form action="https://formspree.io/f/xqkwgrza" method="POST"
+        class="bg-white p-4 sm:p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-bold mb-2">Name</label>
+          <input type="text" id="name" name="name" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-4">
+          <label for="email" class="block text-sm font-bold mb-2">Email</label>
+          <input type="email" id="email" name="email" class="w-full border rounded px-3 py-2" required />
+        </div>
+        <div class="mb-6">
+          <label for="message" class="block text-sm font-bold mb-2">Message</label>
+          <textarea id="message" name="message" rows="4" class="w-full border rounded px-3 py-2" required></textarea>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-700">Send Message</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-900 text-white text-center p-6 mt-12">
+    <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
+  </footer>
+</body>
+
+</html>
