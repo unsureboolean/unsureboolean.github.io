@@ -1,7 +1,8 @@
-// openai-chat.js - Handles OpenAI API integration for the PersonaZoo chat via Cloudflare Worker
+// openai-chat.js - Handles OpenAI API integration for the PersonaZoo chat via Cloudflare Pages Function
 
 // Configuration for API requests
-const WORKER_URL = 'https://jt89openaiapikey.pages.dev/'; // Replace with your actual Cloudflare Worker URL
+const PAGES_URL = 'https://jt89openaiapikey.pages.dev'; // Your Cloudflare Pages domain
+const API_ENDPOINT = '/api/openai'; // The Pages Function endpoint
 
 // Function to initialize the OpenAI chat
 function initOpenAIChat() {
@@ -31,7 +32,7 @@ function sanitizeUsername(username) {
     return sanitized;
 }
 
-// Function to send message to OpenAI API via Cloudflare Worker
+// Function to send message to OpenAI API via Cloudflare Pages Function
 async function sendMessageToOpenAI(message, personaKey) {
     try {
         // Get the selected persona
@@ -70,8 +71,8 @@ async function sendMessageToOpenAI(message, personaKey) {
             content: message
         });
         
-        // Make API request to Cloudflare Worker instead of directly to OpenAI
-        const response = await fetch(WORKER_URL, {
+        // Make API request to Cloudflare Pages Function
+        const response = await fetch(`${PAGES_URL}${API_ENDPOINT}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -85,11 +86,19 @@ async function sendMessageToOpenAI(message, personaKey) {
         });
         
         if (!response.ok) {
-            const errorData = await response.json();
-            console.error('API Error:', errorData);
+            let errorMessage = 'Failed to get response from API';
+            try {
+                const errorData = await response.json();
+                errorMessage = errorData.error?.message || errorMessage;
+            } catch (e) {
+                // If we can't parse the error as JSON, use the status text
+                errorMessage = `Error: ${response.status} ${response.statusText}`;
+            }
+            
+            console.error('API Error:', errorMessage);
             return {
                 success: false,
-                message: `Error: ${errorData.error?.message || 'Failed to get response from API'}`
+                message: `Error: ${errorMessage}`
             };
         }
         
@@ -102,7 +111,7 @@ async function sendMessageToOpenAI(message, personaKey) {
         console.error('Error sending message:', error);
         return {
             success: false,
-            message: `Error: ${error.message}`
+            message: `Network Error: ${error.message}. Please check your connection and try again.`
         };
     }
 }
