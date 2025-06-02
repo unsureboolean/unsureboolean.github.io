@@ -32,6 +32,17 @@
       20% { opacity: 1; }
       100% { opacity: 0.1; }
     }
+    .persona-option {
+      transition: all 0.3s ease;
+    }
+    .persona-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    .persona-option.selected {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+    }
   </style>
 </head>
 
@@ -103,53 +114,69 @@
   <!-- Interactive Chat Demo -->
   <section class="bg-gray-100 py-16 px-4 sm:px-6 scroll-fade">
     <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">Chat Demo</h3>
+      <h3 class="text-3xl font-bold mb-6">Chat with AI Personas</h3>
       <p class="mb-8">
         Experience a conversation with one of our AI personas. Select a persona and start chatting!
       </p>
       
-      <!-- Persona Selection -->
-      <div class="mb-8">
-        <label for="persona-select" class="block text-sm font-bold mb-2">Choose a Persona:</label>
-        <div class="relative">
-          <select id="persona-select" class="w-full border rounded px-3 py-2 appearance-none bg-white">
-            <option value="tech">TechGuru - Technology Expert</option>
-            <option value="creative">CreativeMuse - Creative Consultant</option>
-            <option value="coach">LifeCoach - Personal Development Guide</option>
-            <option value="historian">Historian - History Expert</option>
-          </select>
-          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-              <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
-            </svg>
-          </div>
+      <!-- API Key Input Container (Hidden by default) -->
+      <div id="api-key-container" class="hidden bg-white p-6 rounded-lg shadow-md mb-8">
+        <h4 class="text-xl font-bold mb-4">Connect Your OpenAI API Key</h4>
+        <p class="mb-4">To use the AI chat functionality, please enter your OpenAI API key below. Your key is stored locally in your browser and is never sent to our servers.</p>
+        
+        <div class="mb-4">
+          <label for="openai-api-key" class="block text-sm font-bold mb-2">OpenAI API Key</label>
+          <input type="password" id="openai-api-key" class="w-full border rounded px-3 py-2" placeholder="sk-..." />
+          <p id="api-key-status" class="text-sm mt-1"></p>
         </div>
+        
+        <button id="save-api-key" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+          Save API Key
+        </button>
       </div>
       
-      <!-- Chat Interface -->
-      <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <!-- Chat Messages -->
-        <div id="chat-messages" class="h-96 overflow-y-auto p-4 space-y-4">
-          <div class="chat-message flex items-start">
-            <div class="flex-shrink-0 bg-blue-100 rounded-full p-2 mr-3">
-              <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-              </svg>
-            </div>
-            <div class="bg-blue-100 rounded-lg p-3 max-w-3/4">
-              <p class="text-sm">Hello! I'm TechGuru, your AI technology expert. How can I help you today?</p>
-            </div>
+      <!-- Chat Container (Visible by default) -->
+      <div id="chat-container">
+        <!-- Persona Selection -->
+        <div class="mb-8">
+          <h4 class="text-xl font-bold mb-4">Choose a Persona</h4>
+          <div id="persona-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <!-- Persona cards will be dynamically generated here -->
           </div>
         </div>
         
-        <!-- Chat Input -->
-        <div class="border-t p-4">
-          <form id="chat-form" class="flex">
-            <input type="text" id="chat-input" placeholder="Type your message..." class="flex-grow border rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-            <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded-r hover:bg-blue-700 transition-colors">
-              <i class="fas fa-paper-plane"></i>
-            </button>
-          </form>
+        <!-- Chat Interface -->
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+          <!-- Chat Header -->
+          <div class="bg-blue-900 text-white p-4 flex items-center">
+            <div id="active-persona-icon" class="bg-blue-800 rounded-full p-2 mr-3">
+              <i class="fas fa-robot"></i>
+            </div>
+            <div>
+              <h4 id="active-persona-name" class="font-bold">Helpful Assistant</h4>
+              <p class="text-sm text-blue-200">AI Persona</p>
+            </div>
+            <div class="ml-auto">
+              <button id="clear-chat" class="text-blue-200 hover:text-white" title="Clear chat history">
+                <i class="fas fa-trash-alt"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Chat Messages -->
+          <div id="chat-messages" class="h-96 overflow-y-auto p-4 space-y-4">
+            <!-- Welcome message will be added dynamically -->
+          </div>
+          
+          <!-- Chat Input -->
+          <div class="border-t p-4">
+            <form id="chat-form" class="flex">
+              <input type="text" id="chat-input" placeholder="Type your message..." class="flex-grow border rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+              <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded-r hover:bg-blue-700 transition-colors">
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -197,9 +224,20 @@
     <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
   </footer>
 
+  <!-- Import personas.js -->
+  <script src="js/personas.js"></script>
+  
+  <!-- Import OpenAI chat integration -->
+  <script src="js/openai-chat.js"></script>
+  
   <!-- JavaScript for chat functionality -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Make personas available globally
+      window.personas = personas;
+      window.defaultPersona = defaultPersona;
+      
+      // Mobile menu functionality
       const mobileMenuButton = document.getElementById('mobile-menu-button');
       const mobileNav = document.getElementById('mobile-nav');
       
@@ -233,65 +271,19 @@
       const chatForm = document.getElementById('chat-form');
       const chatInput = document.getElementById('chat-input');
       const chatMessages = document.getElementById('chat-messages');
-      const personaSelect = document.getElementById('persona-select');
+      const clearChatButton = document.getElementById('clear-chat');
       
-      // Persona responses
-      const personaResponses = {
-        tech: [
-          "That's an interesting tech question! The latest advancements in this area suggest...",
-          "From a technical perspective, I'd recommend considering these factors...",
-          "Looking at the current technology landscape, there are several approaches to this...",
-          "That's a common challenge in tech. Here's how I'd solve it...",
-          "Great question about technology! Let me break this down for you..."
-        ],
-        creative: [
-          "From a creative standpoint, I'd suggest exploring these directions...",
-          "That's a fascinating creative challenge! Have you considered...",
-          "Your creative instincts are good! I'd add these elements to enhance it...",
-          "Looking at this creatively, there are several possibilities to explore...",
-          "I love this kind of creative thinking! Let's build on that idea..."
-        ],
-        coach: [
-          "That's a great question about personal development. Let's explore...",
-          "From a coaching perspective, I'd suggest focusing on these areas...",
-          "Many people face similar challenges. Here's an approach that often works well...",
-          "That's an important aspect of personal growth. Consider these strategies...",
-          "I appreciate you sharing that. Here's how we might approach this situation..."
-        ],
-        historian: [
-          "Historically speaking, this is a fascinating topic that dates back to...",
-          "Throughout history, we've seen similar patterns emerge, particularly during...",
-          "The historical context here is important to understand because...",
-          "From a historical perspective, there are several key events that shaped this...",
-          "This reminds me of a similar historical situation that occurred during..."
-        ]
-      };
+      // Current active persona
+      let activePersonaKey = defaultPersona;
       
-      // Persona names
-      const personaNames = {
-        tech: "TechGuru",
-        creative: "CreativeMuse",
-        coach: "LifeCoach",
-        historian: "Historian"
-      };
+      // Generate persona selection cards
+      generatePersonaCards();
       
-      // Handle persona change
-      personaSelect.addEventListener('change', function() {
-        const persona = personaSelect.value;
-        const name = personaNames[persona];
-        
-        // Clear chat
-        chatMessages.innerHTML = '';
-        
-        // Add initial message from selected persona
-        addPersonaMessage(`Hello! I'm ${name}, your AI ${persona === 'tech' ? 'technology expert' : 
-                                        persona === 'creative' ? 'creative consultant' : 
-                                        persona === 'coach' ? 'personal development guide' : 
-                                        'history expert'}. How can I help you today?`);
-      });
+      // Add welcome message from default persona
+      addWelcomeMessage(activePersonaKey);
       
       // Handle form submission
-      chatForm.addEventListener('submit', function(e) {
+      chatForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         const message = chatInput.value.trim();
         if (message) {
@@ -302,27 +294,108 @@
           // Show typing indicator
           showTypingIndicator();
           
-          // Simulate response delay
-          setTimeout(function() {
-            // Remove typing indicator
-            removeTypingIndicator();
-            
-            // Add persona response
-            const persona = personaSelect.value;
-            const responses = personaResponses[persona];
-            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-            addPersonaMessage(randomResponse);
-            
-            // Scroll to bottom
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-          }, 1500);
+          // Get response from OpenAI API
+          const response = await sendMessageToOpenAI(message, activePersonaKey);
+          
+          // Remove typing indicator
+          removeTypingIndicator();
+          
+          // Add persona response
+          if (response.success) {
+            addPersonaMessage(response.message);
+          } else {
+            addSystemMessage(response.message);
+          }
+          
+          // Scroll to bottom
+          chatMessages.scrollTop = chatMessages.scrollHeight;
         }
       });
+      
+      // Handle clear chat button
+      clearChatButton.addEventListener('click', function() {
+        // Clear chat messages
+        chatMessages.innerHTML = '';
+        
+        // Add welcome message
+        addWelcomeMessage(activePersonaKey);
+      });
+      
+      // Function to generate persona selection cards
+      function generatePersonaCards() {
+        const personaGrid = document.getElementById('persona-grid');
+        personaGrid.innerHTML = '';
+        
+        // Create a card for each persona
+        Object.keys(personas).forEach(key => {
+          const persona = personas[key];
+          const card = document.createElement('div');
+          card.className = `persona-option p-4 border rounded-lg cursor-pointer ${key === activePersonaKey ? 'selected' : ''}`;
+          card.dataset.personaKey = key;
+          
+          card.innerHTML = `
+            <div class="text-center mb-2">
+              <div class="inline-block bg-${persona.color}-100 text-${persona.color}-600 rounded-full p-3">
+                <i class="${persona.avatar} text-xl"></i>
+              </div>
+            </div>
+            <h5 class="font-bold text-center">${persona.nickname}</h5>
+          `;
+          
+          // Add click event to select persona
+          card.addEventListener('click', function() {
+            // Update active persona
+            activePersonaKey = key;
+            
+            // Update selected card styling
+            document.querySelectorAll('.persona-option').forEach(card => {
+              card.classList.remove('selected');
+            });
+            card.classList.add('selected');
+            
+            // Update active persona display
+            updateActivePersonaDisplay();
+            
+            // Clear chat and add welcome message
+            chatMessages.innerHTML = '';
+            addWelcomeMessage(activePersonaKey);
+          });
+          
+          personaGrid.appendChild(card);
+        });
+      }
+      
+      // Function to update active persona display
+      function updateActivePersonaDisplay() {
+        const persona = personas[activePersonaKey];
+        document.getElementById('active-persona-name').textContent = persona.nickname;
+        
+        const iconElement = document.getElementById('active-persona-icon');
+        iconElement.className = `bg-${persona.color}-800 rounded-full p-2 mr-3`;
+        iconElement.innerHTML = `<i class="${persona.avatar}"></i>`;
+      }
+      
+      // Function to add welcome message
+      function addWelcomeMessage(personaKey) {
+        const persona = personas[personaKey];
+        let welcomeMessage = `Hello! I'm ${persona.nickname}. How can I help you today?`;
+        
+        // Special welcome messages for certain personas
+        if (personaKey === 'socrates') {
+          welcomeMessage = "Greetings, seeker of wisdom! I am Socrates, ready to explore the depths of philosophical thought with you. What truth shall we pursue today?";
+        } else if (personaKey === 'jack_sparrow') {
+          welcomeMessage = "Ahoy there! Captain Jack Sparrow at your service. What manner of conversational treasure are we hunting for today, savvy?";
+        } else if (personaKey === 'homer_simpson') {
+          welcomeMessage = "Hey there! Homer Simpson here. Got any donuts? Or maybe a Duff? What's on your mind?";
+        }
+        
+        addPersonaMessage(welcomeMessage);
+      }
       
       // Add user message to chat
       function addUserMessage(message) {
         const messageElement = document.createElement('div');
-        messageElement.className = 'chat-message flex items-start justify-end';
+        messageElement.className = 'chat-message user-message flex items-start justify-end';
         messageElement.innerHTML = `
           <div class="bg-blue-900 text-white rounded-lg p-3 max-w-3/4">
             <p class="text-sm">${message}</p>
@@ -339,16 +412,28 @@
       
       // Add persona message to chat
       function addPersonaMessage(message) {
+        const persona = personas[activePersonaKey];
         const messageElement = document.createElement('div');
-        messageElement.className = 'chat-message flex items-start';
+        messageElement.className = 'chat-message persona-message flex items-start';
         messageElement.innerHTML = `
-          <div class="flex-shrink-0 bg-blue-100 rounded-full p-2 mr-3">
-            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
+          <div class="flex-shrink-0 bg-${persona.color}-100 rounded-full p-2 mr-3">
+            <i class="${persona.avatar} text-${persona.color}-600"></i>
           </div>
-          <div class="bg-blue-100 rounded-lg p-3 max-w-3/4">
+          <div class="bg-${persona.color}-100 rounded-lg p-3 max-w-3/4">
             <p class="text-sm">${message}</p>
+          </div>
+        `;
+        chatMessages.appendChild(messageElement);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+      
+      // Add system message to chat (for errors, notifications)
+      function addSystemMessage(message) {
+        const messageElement = document.createElement('div');
+        messageElement.className = 'chat-message system-message flex items-start justify-center';
+        messageElement.innerHTML = `
+          <div class="bg-gray-200 rounded-lg p-3 max-w-3/4 text-center">
+            <p class="text-sm text-gray-700"><i class="fas fa-info-circle mr-2"></i>${message}</p>
           </div>
         `;
         chatMessages.appendChild(messageElement);
@@ -357,16 +442,15 @@
       
       // Show typing indicator
       function showTypingIndicator() {
+        const persona = personas[activePersonaKey];
         const indicatorElement = document.createElement('div');
         indicatorElement.id = 'typing-indicator';
         indicatorElement.className = 'chat-message flex items-start';
         indicatorElement.innerHTML = `
-          <div class="flex-shrink-0 bg-blue-100 rounded-full p-2 mr-3">
-            <svg class="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
-            </svg>
+          <div class="flex-shrink-0 bg-${persona.color}-100 rounded-full p-2 mr-3">
+            <i class="${persona.avatar} text-${persona.color}-600"></i>
           </div>
-          <div class="bg-blue-100 rounded-lg p-3">
+          <div class="bg-${persona.color}-100 rounded-lg p-3">
             <p class="text-sm typing-indicator">
               <span>.</span><span>.</span><span>.</span>
             </p>

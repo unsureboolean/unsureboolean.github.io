@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Art Projects</title>
+    <title>AI Art Projects - Jeff Tuel</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Add AOS for scroll animations -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
         body { font-family: 'Montserrat', sans-serif; }
         .header-color { background-color: #2C3E50; }
@@ -14,17 +16,125 @@
         .portfolio-color { background-color: #18BC9C; }
         .about-color { background-color: #3498DB; }
         .contact-color { background-color: #2C3E50; }
+        .gallery-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .nav-link {
+          position: relative;
+        }
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          width: 0;
+          height: 2px;
+          bottom: -2px;
+          left: 0;
+          background-color: #93c5fd;
+          transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+          width: 100%;
+        }
     </style>
 </head>
-<body>
-    <div class="container mx-auto px-4">
-        <h1 class="text-4xl font-bold text-center my-8">Fantasy Football Team Logos</h1>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="bg-blue-900 text-white p-6 sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">Jeff Tuel</h1>
+            
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-button" class="sm:hidden text-white focus:outline-none" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars text-xl"></i>
+            </button>
+
+            <!-- Navigation for desktop -->
+            <nav id="desktop-nav" class="hidden sm:block">
+                <ul class="flex space-x-6">
+                    <li><a href="index.html#about" class="nav-link hover:text-blue-200">About</a></li>
+                    <li><a href="index.html#experience" class="nav-link hover:text-blue-200">Experience</a></li>
+                    <li><a href="index.html#projects" class="nav-link hover:text-blue-200">Projects</a></li>
+                    <li><a href="index.html#personal" class="nav-link hover:text-blue-200">Personal Life</a></li>
+                    <li><a href="index.html#beliefs" class="nav-link hover:text-blue-200">Beliefs</a></li>
+                    <li><a href="index.html#contact" class="nav-link hover:text-blue-200">Contact</a></li>
+                    <li><a href="aiartwork.html" class="nav-link hover:text-blue-200 font-bold">AI Artwork</a></li>
+                    <li><a href="personazoo.html" class="nav-link hover:text-blue-200">PersonaZoo</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Mobile navigation dropdown menu -->
+        <nav id="mobile-nav" class="hidden mt-4 sm:hidden">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="index.html#about" class="block hover:text-blue-200">About</a></li>
+                <li><a href="index.html#experience" class="block hover:text-blue-200">Experience</a></li>
+                <li><a href="index.html#projects" class="block hover:text-blue-200">Projects</a></li>
+                <li><a href="index.html#personal" class="block hover:text-blue-200">Personal Life</a></li>
+                <li><a href="index.html#beliefs" class="block hover:text-blue-200">Beliefs</a></li>
+                <li><a href="index.html#contact" class="block hover:text-blue-200">Contact</a></li>
+                <li><a href="aiartwork.html" class="block hover:text-blue-200 font-bold">AI Artwork</a></li>
+                <li><a href="personazoo.html" class="block hover:text-blue-200">PersonaZoo</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="bg-blue-100 py-16">
+        <div class="container mx-auto px-4 text-center" data-aos="fade-up">
+            <h1 class="text-4xl font-bold mb-6">AI-Generated Artwork</h1>
+            <p class="text-xl max-w-3xl mx-auto">Exploring creativity through artificial intelligence and digital art</p>
+        </div>
+    </section>
+
+    <!-- Fantasy Football Team Logos Section -->
+    <div class="container mx-auto px-4 py-16">
+        <h2 class="text-3xl font-bold text-center mb-8" data-aos="fade-up">Fantasy Football Team Logos</h2>
+        <p class="text-lg text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+            Custom-designed logos for fantasy football teams, created using AI image generation tools and creative prompts.
+        </p>
 
         <!-- Logo Gallery -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <!-- Repeat this block for each logo -->
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Donkey Ballers.png" alt="Donkey Ballers Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="150">
+                <img class="w-full cursor-pointer" src="FFimages/Donkey Ballers.png" alt="Donkey Ballers Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Donkey Ballers</div>
                     <p class="text-gray-700 text-base">
@@ -32,8 +142,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Fair Weather Fans.png" alt="Fair Weather Fans Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                <img class="w-full cursor-pointer" src="FFimages/Fair Weather Fans.png" alt="Fair Weather Fans Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Fair Weather Fans</div>
                     <p class="text-gray-700 text-base">
@@ -41,8 +151,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Gettin Sendy.png" alt="Gettin Sendy Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="250">
+                <img class="w-full cursor-pointer" src="FFimages/Gettin Sendy.png" alt="Gettin Sendy Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Gettin Sendy</div>
                     <p class="text-gray-700 text-base">
@@ -50,8 +160,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Isengard Wargs.png" alt="Isengard Wargs Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                <img class="w-full cursor-pointer" src="FFimages/Isengard Wargs.png" alt="Isengard Wargs Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Isengard Wargs</div>
                     <p class="text-gray-700 text-base">
@@ -59,8 +169,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Raider Rash.png" alt="Raider Rash Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="350">
+                <img class="w-full cursor-pointer" src="FFimages/Raider Rash.png" alt="Raider Rash Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Raider Rash</div>
                     <p class="text-gray-700 text-base">
@@ -68,8 +178,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Rocky Mountain Climb.png" alt="Rocky Mountain Climb Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="400">
+                <img class="w-full cursor-pointer" src="FFimages/Rocky Mountain Climb.png" alt="Rocky Mountain Climb Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Rocky Mountain Climb</div>
                     <p class="text-gray-700 text-base">
@@ -77,8 +187,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Springfield Isotopes.png" alt="Springfield Isotopes Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="450">
+                <img class="w-full cursor-pointer" src="FFimages/Springfield Isotopes.png" alt="Springfield Isotopes Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Springfield Isotopes</div>
                     <p class="text-gray-700 text-base">
@@ -86,8 +196,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/The Leopards.png" alt="The Leopards Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="500">
+                <img class="w-full cursor-pointer" src="FFimages/The Leopards.png" alt="The Leopards Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">The Leopards</div>
                     <p class="text-gray-700 text-base">
@@ -95,8 +205,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Uncle Rico.jpg" alt="Uncle Rico Fantasy Football Team Logo">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="550">
+                <img class="w-full cursor-pointer" src="FFimages/Uncle Rico.jpg" alt="Uncle Rico Fantasy Football Team Logo" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Uncle Rico</div>
                     <p class="text-gray-700 text-base">
@@ -106,16 +216,18 @@
             </div>
         </div>
     </div>
-</body>
-<body>
-    <div class="container mx-auto px-4">
-        <h1 class="text-4xl font-bold text-center my-8">Florida Man Moses project</h1>
+
+    <!-- Florida Man Moses project -->
+    <div class="container mx-auto px-4 py-16 bg-gray-100">
+        <h2 class="text-3xl font-bold text-center mb-8" data-aos="fade-up">Florida Man Moses Project</h2>
+        <p class="text-lg text-center max-w-3xl mx-auto mb-12" data-aos="fade-up" data-aos-delay="100">
+            A humorous reimagining of biblical stories set in modern-day Florida, created with AI image generation.
+        </p>
 
         <!-- Logo Gallery -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <!-- Repeat this block for each logo -->
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses1.png" alt="Florida Man Moses Project">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="150">
+                <img class="w-full cursor-pointer" src="FFimages/Moses1.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Tending the Flock</div>
                     <p class="text-gray-700 text-base">
@@ -123,8 +235,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses2.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                <img class="w-full cursor-pointer" src="FFimages/Moses2.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Burning Bush</div>
                     <p class="text-gray-700 text-base">
@@ -132,8 +244,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses3.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="250">
+                <img class="w-full cursor-pointer" src="FFimages/Moses3.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Convincing Pharoah</div>
                     <p class="text-gray-700 text-base">
@@ -141,8 +253,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses4.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                <img class="w-full cursor-pointer" src="FFimages/Moses4.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Promised Land</div>
                     <p class="text-gray-700 text-base">
@@ -150,8 +262,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses5.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="350">
+                <img class="w-full cursor-pointer" src="FFimages/Moses5.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Leaving Egypt</div>
                     <p class="text-gray-700 text-base">
@@ -159,8 +271,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses6.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="400">
+                <img class="w-full cursor-pointer" src="FFimages/Moses6.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Promised Land</div>
                     <p class="text-gray-700 text-base">
@@ -168,8 +280,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses7.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="450">
+                <img class="w-full cursor-pointer" src="FFimages/Moses7.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Alternative Florida Man Moses</div>
                     <p class="text-gray-700 text-base">
@@ -177,8 +289,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses8.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="500">
+                <img class="w-full cursor-pointer" src="FFimages/Moses8.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Alternative Florida Man Moses</div>
                     <p class="text-gray-700 text-base">
@@ -186,8 +298,8 @@
                     </p>
                 </div>
             </div>
-            <div class="max-w-sm rounded overflow-hidden shadow-lg">
-                <img class="w-full" src="FFimages/Moses9a.png" alt="Florida Man Moses Project">
+            <div class="gallery-item max-w-sm rounded overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="550">
+                <img class="w-full cursor-pointer" src="FFimages/Moses9.png" alt="Florida Man Moses Project" onclick="openModal(this)">
                 <div class="px-6 py-4">
                     <div class="font-bold text-xl mb-2">Alternative Florida Man Moses</div>
                     <p class="text-gray-700 text-base">
@@ -197,5 +309,106 @@
             </div>
         </div>
     </div>
+
+    <!-- Back to Home -->
+    <div class="container mx-auto px-4 py-12 text-center">
+        <a href="index.html" class="inline-block bg-blue-900 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-home mr-2"></i>Back to Home
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-6 mt-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://linkedin.com/in/jeff-tuel" target="_blank" rel="noopener noreferrer" class="text-white hover:text-blue-200 transition-colors">
+                    <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+                <a href="mailto:contact@jefftuel.com" class="text-white hover:text-blue-200 transition-colors">
+                    <i class="fas fa-envelope text-2xl"></i>
+                </a>
+            </div>
+            <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
+            <div class="mt-2 flex justify-center space-x-4 text-sm">
+                <a href="index.html" class="text-blue-200 hover:text-white transition-colors">Home</a>
+                <a href="aiartwork.html" class="text-blue-200 hover:text-white transition-colors">AI Artwork</a>
+                <a href="personazoo.html" class="text-blue-200 hover:text-white transition-colors">PersonaZoo</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- JavaScript for mobile menu and modal -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileNav = document.getElementById('mobile-nav');
+            
+            // Toggle mobile menu visibility
+            mobileMenuButton.addEventListener('click', function() {
+                mobileNav.classList.toggle('hidden');
+                
+                // Change icon based on menu state
+                const menuIcon = mobileMenuButton.querySelector('i');
+                if (mobileNav.classList.contains('hidden')) {
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-times');
+                }
+            });
+            
+            // Close menu when clicking a navigation link
+            const mobileNavLinks = mobileNav.querySelectorAll('a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileNav.classList.add('hidden');
+                    const menuIcon = mobileMenuButton.querySelector('i');
+                    menuIcon.classList.remove('fa-times');
+                    menuIcon.classList.add('fa-bars');
+                });
+            });
+        });
+
+        // Modal functionality
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImage");
+        const closeBtn = document.getElementsByClassName("close")[0];
+
+        function openModal(img) {
+            modal.style.display = "flex";
+            modalImg.src = img.src;
+        }
+
+        closeBtn.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    <!-- AOS Initialization -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+    </script>
+
+    <!-- Import animations.js -->
+    <script src="js/animations.js"></script>
 </body>
 </html>
