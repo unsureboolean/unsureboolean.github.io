@@ -10,8 +10,41 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Add Font Awesome for hamburger menu icon -->
+  <!-- Add Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <!-- Add AOS for scroll animations -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <style>
+    .project-card {
+      transition: all 0.3s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -2px;
+      left: 0;
+      background-color: #93c5fd;
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .skill-badge {
+      transition: all 0.3s ease;
+    }
+    .skill-badge:hover {
+      transform: scale(1.1);
+    }
+  </style>
 </head>
 
 <body class="bg-gray-50 text-gray-800 overflow-x-hidden">
@@ -28,12 +61,14 @@
       <!-- Navigation for desktop -->
       <nav id="desktop-nav" class="hidden sm:block">
         <ul class="flex space-x-6">
-          <li><a href="#about" class="hover:text-blue-200 underline-offset-4 hover:underline">About</a></li>
-          <li><a href="#experience" class="hover:text-blue-200 underline-offset-4 hover:underline">Experience</a></li>
-          <li><a href="#projects" class="hover:text-blue-200 underline-offset-4 hover:underline">Projects</a></li>
-          <li><a href="#personal" class="hover:text-blue-200 underline-offset-4 hover:underline">Personal Life</a></li>
-          <li><a href="#beliefs" class="hover:text-blue-200 underline-offset-4 hover:underline">Beliefs</a></li>
-          <li><a href="#contact" class="hover:text-blue-200 underline-offset-4 hover:underline">Contact</a></li>
+          <li><a href="#about" class="nav-link hover:text-blue-200">About</a></li>
+          <li><a href="#experience" class="nav-link hover:text-blue-200">Experience</a></li>
+          <li><a href="#projects" class="nav-link hover:text-blue-200">Projects</a></li>
+          <li><a href="#personal" class="nav-link hover:text-blue-200">Personal Life</a></li>
+          <li><a href="#beliefs" class="nav-link hover:text-blue-200">Beliefs</a></li>
+          <li><a href="#contact" class="nav-link hover:text-blue-200">Contact</a></li>
+          <li><a href="aiartwork.html" class="nav-link hover:text-blue-200">AI Artwork</a></li>
+          <li><a href="personazoo.html" class="nav-link hover:text-blue-200">PersonaZoo</a></li>
         </ul>
       </nav>
     </div>
@@ -41,101 +76,247 @@
     <!-- Mobile navigation dropdown menu -->
     <nav id="mobile-nav" class="hidden mt-4 sm:hidden">
       <ul class="flex flex-col space-y-4">
-        <li><a href="#about" class="block hover:text-blue-200 underline-offset-4 hover:underline">About</a></li>
-        <li><a href="#experience" class="block hover:text-blue-200 underline-offset-4 hover:underline">Experience</a></li>
-        <li><a href="#projects" class="block hover:text-blue-200 underline-offset-4 hover:underline">Projects</a></li>
-        <li><a href="#personal" class="block hover:text-blue-200 underline-offset-4 hover:underline">Personal Life</a></li>
-        <li><a href="#beliefs" class="block hover:text-blue-200 underline-offset-4 hover:underline">Beliefs</a></li>
-        <li><a href="#contact" class="block hover:text-blue-200 underline-offset-4 hover:underline">Contact</a></li>
+        <li><a href="#about" class="block hover:text-blue-200">About</a></li>
+        <li><a href="#experience" class="block hover:text-blue-200">Experience</a></li>
+        <li><a href="#projects" class="block hover:text-blue-200">Projects</a></li>
+        <li><a href="#personal" class="block hover:text-blue-200">Personal Life</a></li>
+        <li><a href="#beliefs" class="block hover:text-blue-200">Beliefs</a></li>
+        <li><a href="#contact" class="block hover:text-blue-200">Contact</a></li>
+        <li><a href="aiartwork.html" class="block hover:text-blue-200">AI Artwork</a></li>
+        <li><a href="personazoo.html" class="block hover:text-blue-200">PersonaZoo</a></li>
       </ul>
     </nav>
   </header>
 
   <!-- Hero Section -->
   <section class="bg-blue-100 py-16 sm:py-20">
-    <div class="max-w-6xl mx-auto text-center px-4 sm:px-6">
+    <div class="max-w-6xl mx-auto text-center px-4 sm:px-6" data-aos="fade-up">
       <h2 class="text-2xl sm:text-4xl font-extrabold mb-4">Hi, I'm Jeff</h2>
       <p class="text-lg sm:text-xl mb-6">Clear. Focused. People-first.</p>
       <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
         <a href="Jeff_Tuel_Resume.pdf" download aria-label="Download resume in PDF format"
-          class="bg-blue-900 text-white px-5 py-2 rounded hover:bg-blue-700">Download Resume</a>
+          class="bg-blue-900 text-white px-5 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+          <i class="fas fa-file-download mr-2"></i>Download Resume
+        </a>
         <a href="https://linkedin.com/in/jeff-tuel" target="_blank" rel="noopener noreferrer"
-          class="bg-white border border-blue-900 text-blue-900 px-5 py-2 rounded hover:bg-blue-100"
-          aria-label="Visit Jeff's LinkedIn profile in a new tab">LinkedIn Profile</a>
+          class="bg-white border border-blue-900 text-blue-900 px-5 py-2 rounded hover:bg-blue-100 transition-all duration-300 transform hover:scale-105"
+          aria-label="Visit Jeff's LinkedIn profile in a new tab">
+          <i class="fab fa-linkedin mr-2"></i>LinkedIn Profile
+        </a>
       </div>
     </div>
   </section>
 
   <!-- About Section -->
   <section id="about" class="py-16 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">About</h3>
-      <p>
+    <div class="max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+      <h3 class="text-3xl font-bold mb-6 flex items-center">
+        <i class="fas fa-user-circle text-blue-900 mr-3"></i>About
+      </h3>
+      <p class="leading-relaxed">
         I help teams navigate change, solve problems, and build stronger connections. I believe in people-centered leadership and using communication as a tool for real progress. While my background is in tech and consulting, I'm always open to any work that feels grounded and focused on helping real people in meaningful ways. I'm especially drawn to roles where empathy, clarity, and human connection are front and center.
       </p>
+      
+      <!-- Skills Section -->
+      <div class="mt-8">
+        <h4 class="text-xl font-semibold mb-4">Skills</h4>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Leadership</span>
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Communication</span>
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Problem Solving</span>
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Team Building</span>
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Project Management</span>
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Change Management</span>
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">User Adoption</span>
+          <span class="skill-badge bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Consulting</span>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Experience Section -->
   <section id="experience" class="bg-gray-100 py-16 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">Experience</h3>
-      <p>
-        Highlights from my previous roles include leading internal product rollouts at Avaya, consulting with cross-functional teams at Slalom, and supporting user adoption at Coastal Cloud. My work has always been rooted in collaboration and clear communication—making complex solutions approachable for everyday users. That skill set is useful both in and outside the tech world, and I'm eager to apply it to any mission-driven environments.
-      </p>
+    <div class="max-w-4xl mx-auto" data-aos="fade-up">
+      <h3 class="text-3xl font-bold mb-6 flex items-center">
+        <i class="fas fa-briefcase text-blue-900 mr-3"></i>Experience
+      </h3>
+      <div class="space-y-8">
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+          <h4 class="text-xl font-bold text-blue-900">Avaya</h4>
+          <p class="text-gray-600 mb-3">Led internal product rollouts</p>
+          <p class="leading-relaxed">
+            Managed cross-functional teams to successfully implement new products and systems, ensuring smooth adoption and minimal disruption to operations.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+          <h4 class="text-xl font-bold text-blue-900">Slalom</h4>
+          <p class="text-gray-600 mb-3">Consulted with cross-functional teams</p>
+          <p class="leading-relaxed">
+            Provided strategic guidance and technical expertise to help teams overcome challenges and achieve their business objectives.
+          </p>
+        </div>
+        
+        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300">
+          <h4 class="text-xl font-bold text-blue-900">Coastal Cloud</h4>
+          <p class="text-gray-600 mb-3">Supported user adoption</p>
+          <p class="leading-relaxed">
+            Developed and implemented strategies to increase user adoption of new technologies, focusing on clear communication and practical training.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Projects Section -->
   <section id="projects" class="py-16 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">Projects</h3>
-      <p>
-        I have helped design employee onboarding programs, created enablement tools to support marketing and sales teams, and led process improvement initiatives that increased team productivity and reduced friction. I've lead the creation of an AI product from roadmap to launch, led cross-functional teams, and led meetings with VPs and executives from worldwide corporations. Having worked in a variety of positions within a project team has allowed me to better understand what it takes to make things happen.
-      </p>
+    <div class="max-w-4xl mx-auto" data-aos="fade-up">
+      <h3 class="text-3xl font-bold mb-6 flex items-center">
+        <i class="fas fa-project-diagram text-blue-900 mr-3"></i>Projects
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="project-card bg-white p-6 rounded-lg shadow-md">
+          <div class="text-blue-900 text-3xl mb-4">
+            <i class="fas fa-users"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2">Employee Onboarding</h4>
+          <p>
+            Designed comprehensive onboarding programs that improved new hire integration and reduced time-to-productivity.
+          </p>
+        </div>
+        
+        <div class="project-card bg-white p-6 rounded-lg shadow-md">
+          <div class="text-blue-900 text-3xl mb-4">
+            <i class="fas fa-tools"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2">Enablement Tools</h4>
+          <p>
+            Created tools and resources to support marketing and sales teams, enhancing their effectiveness and efficiency.
+          </p>
+        </div>
+        
+        <div class="project-card bg-white p-6 rounded-lg shadow-md">
+          <div class="text-blue-900 text-3xl mb-4">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2">Process Improvement</h4>
+          <p>
+            Led initiatives that increased team productivity and reduced friction in workflows and operations.
+          </p>
+        </div>
+        
+        <div class="project-card bg-white p-6 rounded-lg shadow-md">
+          <div class="text-blue-900 text-3xl mb-4">
+            <i class="fas fa-robot"></i>
+          </div>
+          <h4 class="text-xl font-bold mb-2">AI Product Development</h4>
+          <p>
+            Led the creation of an AI product from roadmap to launch, coordinating cross-functional teams throughout the process.
+          </p>
+          <div class="mt-4">
+            <a href="personazoo.html" class="text-blue-900 hover:text-blue-700 font-medium flex items-center">
+              <span>View PersonaZoo</span>
+              <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Personal Life Section -->
   <section id="personal" class="bg-gray-100 py-16 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">Personal Life</h3>
-      <p>
+    <div class="max-w-4xl mx-auto" data-aos="fade-up">
+      <h3 class="text-3xl font-bold mb-6 flex items-center">
+        <i class="fas fa-home text-blue-900 mr-3"></i>Personal Life
+      </h3>
+      <p class="leading-relaxed mb-6">
         Outside of work, I enjoy strategy and story-driven games, reading sci-fi and litrpg books, exploring new technology, and spending time with family. I've learned the importance of rest and balance, especially in a world that never slows down. Time with my family, a good book, or a night of gaming with friends helps me reset and show up as my best self when it really counts. I'm also constantly bombarded with attention from my pets!
       </p>
+      
+      <!-- Interests -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+        <div class="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+          <i class="fas fa-gamepad text-3xl text-blue-900 mb-2"></i>
+          <p class="font-medium">Gaming</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+          <i class="fas fa-book text-3xl text-blue-900 mb-2"></i>
+          <p class="font-medium">Reading</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+          <i class="fas fa-laptop-code text-3xl text-blue-900 mb-2"></i>
+          <p class="font-medium">Technology</p>
+        </div>
+        <div class="bg-white p-4 rounded-lg shadow-md text-center hover:shadow-lg transition-all duration-300">
+          <i class="fas fa-users text-3xl text-blue-900 mb-2"></i>
+          <p class="font-medium">Family Time</p>
+        </div>
+      </div>
+      
+      <!-- AI Artwork Link -->
+      <div class="mt-8 text-center">
+        <a href="aiartwork.html" class="inline-block bg-blue-900 text-white px-5 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+          <i class="fas fa-palette mr-2"></i>Check Out My AI Artwork
+        </a>
+      </div>
     </div>
   </section>
 
   <!-- Beliefs Section -->
   <section id="beliefs" class="py-16 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">What I Believe In</h3>
-      <p>
-        I believe that great communication can solve almost any problem. I value curiosity, empathy, and the drive to empower teams, organizations, and myself. I'm open to stepping away from corporate tech work if it means contributing to something that actually improves people's lives.
-      </p>
+    <div class="max-w-4xl mx-auto" data-aos="fade-up">
+      <h3 class="text-3xl font-bold mb-6 flex items-center">
+        <i class="fas fa-lightbulb text-blue-900 mr-3"></i>What I Believe In
+      </h3>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <p class="leading-relaxed">
+          I believe that great communication can solve almost any problem. I value curiosity, empathy, and the drive to empower teams, organizations, and myself. I'm open to stepping away from corporate tech work if it means contributing to something that actually improves people's lives.
+        </p>
+        
+        <!-- Core Values -->
+        <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="border border-blue-200 rounded-lg p-4 hover:bg-blue-50 transition-colors duration-300">
+            <h4 class="font-bold text-blue-900 mb-2">Communication</h4>
+            <p class="text-sm">Clear, honest, and empathetic communication builds trust and drives progress.</p>
+          </div>
+          <div class="border border-blue-200 rounded-lg p-4 hover:bg-blue-50 transition-colors duration-300">
+            <h4 class="font-bold text-blue-900 mb-2">Empathy</h4>
+            <p class="text-sm">Understanding others' perspectives is essential for meaningful collaboration and growth.</p>
+          </div>
+          <div class="border border-blue-200 rounded-lg p-4 hover:bg-blue-50 transition-colors duration-300">
+            <h4 class="font-bold text-blue-900 mb-2">Empowerment</h4>
+            <p class="text-sm">Enabling others to succeed creates stronger teams and more sustainable outcomes.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Contact Section -->
   <section id="contact" class="bg-blue-100 py-16 px-4 sm:px-6">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6 text-center">Contact Me</h3>
+    <div class="max-w-4xl mx-auto" data-aos="fade-up">
+      <h3 class="text-3xl font-bold mb-6 text-center flex items-center justify-center">
+        <i class="fas fa-envelope text-blue-900 mr-3"></i>Contact Me
+      </h3>
       <form action="https://formspree.io/f/xqkwgrza" method="POST"
         class="bg-white p-4 sm:p-8 rounded-lg shadow-md max-w-2xl mx-auto">
         <div class="mb-4">
           <label for="name" class="block text-sm font-bold mb-2">Name</label>
-          <input type="text" id="name" name="name" class="w-full border rounded px-3 py-2" required />
+          <input type="text" id="name" name="name" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" required />
         </div>
         <div class="mb-4">
           <label for="email" class="block text-sm font-bold mb-2">Email</label>
-          <input type="email" id="email" name="email" class="w-full border rounded px-3 py-2" required />
+          <input type="email" id="email" name="email" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" required />
         </div>
         <div class="mb-6">
           <label for="message" class="block text-sm font-bold mb-2">Message</label>
-          <textarea id="message" name="message" rows="4" class="w-full border rounded px-3 py-2" required></textarea>
+          <textarea id="message" name="message" rows="4" class="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all" required></textarea>
         </div>
         <div class="text-center">
-          <button type="submit" class="bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-700">Send Message</button>
+          <button type="submit" class="bg-blue-900 text-white px-6 py-2 rounded hover:bg-blue-700 transition-all duration-300 transform hover:scale-105">
+            <i class="fas fa-paper-plane mr-2"></i>Send Message
+          </button>
         </div>
       </form>
     </div>
@@ -143,7 +324,21 @@
 
   <!-- Footer -->
   <footer class="bg-blue-900 text-white text-center p-6 mt-12">
-    <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
+    <div class="max-w-4xl mx-auto">
+      <div class="flex justify-center space-x-6 mb-4">
+        <a href="https://linkedin.com/in/jeff-tuel" target="_blank" rel="noopener noreferrer" class="text-white hover:text-blue-200 transition-colors">
+          <i class="fab fa-linkedin text-2xl"></i>
+        </a>
+        <a href="mailto:contact@jefftuel.com" class="text-white hover:text-blue-200 transition-colors">
+          <i class="fas fa-envelope text-2xl"></i>
+        </a>
+      </div>
+      <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
+      <div class="mt-2 flex justify-center space-x-4 text-sm">
+        <a href="aiartwork.html" class="text-blue-200 hover:text-white transition-colors">AI Artwork</a>
+        <a href="personazoo.html" class="text-blue-200 hover:text-white transition-colors">PersonaZoo</a>
+      </div>
+    </div>
   </footer>
 
   <!-- JavaScript for toggling mobile menu -->
@@ -177,8 +372,39 @@
           menuIcon.classList.add('fa-bars');
         });
       });
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+          e.preventDefault();
+          
+          const targetId = this.getAttribute('href');
+          const targetElement = document.querySelector(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 100,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
     });
   </script>
+  
+  <!-- AOS Initialization -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration: 800,
+      easing: 'ease-in-out',
+      once: true,
+      offset: 100
+    });
+  </script>
+  
+  <!-- Import animations.js -->
+  <script src="js/animations.js"></script>
 </body>
 
 </html>
