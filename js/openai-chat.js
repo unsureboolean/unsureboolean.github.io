@@ -1,8 +1,7 @@
-// openai-chat.js - Handles OpenAI API integration for the PersonaZoo chat via Cloudflare Pages Function
+// openai-chat.js - Handles OpenAI API integration for the PersonaZoo chat via Cloudflare Worker
 
 // Configuration for API requests
-const PAGES_URL = 'https://jt89openaiapikey.pages.dev'; // Your Cloudflare Pages domain
-const API_ENDPOINT = '/api/openai'; // The Pages Function endpoint
+const WORKER_URL = 'https://your-worker-subdomain.workers.dev'; // Replace with your actual Cloudflare Worker URL
 
 // Function to initialize the OpenAI chat
 function initOpenAIChat() {
@@ -32,7 +31,7 @@ function sanitizeUsername(username) {
     return sanitized;
 }
 
-// Function to send message to OpenAI API via Cloudflare Pages Function
+// Function to send message to OpenAI API via Cloudflare Worker
 async function sendMessageToOpenAI(message, personaKey) {
     try {
         // Get the selected persona
@@ -71,8 +70,8 @@ async function sendMessageToOpenAI(message, personaKey) {
             content: message
         });
         
-        // Make API request to Cloudflare Pages Function
-        const response = await fetch(`${PAGES_URL}${API_ENDPOINT}`, {
+        // Make API request to Cloudflare Worker
+        const response = await fetch(WORKER_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
