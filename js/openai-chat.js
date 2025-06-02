@@ -1,7 +1,7 @@
 // openai-chat.js - Handles OpenAI API integration for the PersonaZoo chat via Cloudflare Worker
 
 // Configuration for API requests
-const WORKER_URL = 'jt89openaiapikey.pages.dev'; // Replace with your actual Cloudflare Worker URL
+const WORKER_URL = 'jt86.cnmbw682fn.workers.dev'; // Replace with your actual Cloudflare Worker URL
 
 // Function to initialize the OpenAI chat
 function initOpenAIChat() {
