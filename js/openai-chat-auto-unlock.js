@@ -180,7 +180,7 @@ async function sendMessageToOpenAI(message, personaKey) {
             temperature: OPENAI_SETTINGS.temperature,
             presence_penalty: OPENAI_SETTINGS.presence_penalty,
             frequency_penalty: OPENAI_SETTINGS.frequency_penalty,
-            safe_prompt: OPENAI_SETTINGS.safe_prompt
+            // safe_prompt: OPENAI_SETTINGS.safe_prompt
         };
         
         console.log('Request payload prepared, attempting fetch...');
