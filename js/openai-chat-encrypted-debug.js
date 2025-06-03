@@ -1,7 +1,7 @@
 // openai-chat-encrypted-debug.js - Enhanced debugging version for troubleshooting password issues
 
 // Encrypted API key (will be replaced with your encrypted key)
-const ENCRYPTED_API_KEY = "MANMBFI4A1kAUTghdQdQBlgNHDwBUioNbiADMEdkLBxFFnUfBCkkJXUtMUANdnhQJwQPOWQcIC0OVRgOAgMgExUuUAYKQTk2elolREoEWQw7RxlWAQQDH2YdXicjUQE/LisJMGwwAUArEx4vDiINF0sgMzYsYTxUJiQRI0UZLCQxTysyGlssJ3QPHQ4YWCsmJlAKF1MQWjAtRyAWIT0ZKxEeWTU=";
+const ENCRYPTED_API_KEY = "AAJAAB4KWx9KFw8uEilSe2BxXgAsBlwQRVRUHiwOBQ4TVnADJg1VB1hcAAJVIDwnKQAUX0d1NDwyNTw/W11QNwILMzpWQ2MAHj0hNTgrVX9EKT1eMgAHWnR5FVpYNic3ewZQBx4bXTQmUHF9BBMHMRoxaEADRgcjSQgQaW1SOx88ESk6d0ZYITgIAAkoBlhbCjE9BDYVcGdAXgssRy5UeXN1HCg=";
 
 // Function to decrypt the API key using a password with detailed logging
 function decryptApiKey(password) {
