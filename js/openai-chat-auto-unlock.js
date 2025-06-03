@@ -164,7 +164,7 @@ async function sendMessageToOpenAI(message, personaKey) {
         
         // Make API request directly to OpenAI
         const requestBody = {
-            model: "gpt-4.1",
+            model: "gpt-3.5-turbo",
             messages: conversationHistory,
             max_tokens: 350,
             temperature: 0.8
