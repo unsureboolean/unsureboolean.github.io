@@ -119,8 +119,8 @@
         Experience a conversation with one of our AI personas. Select a persona and start chatting!
       </p>
       
-      <!-- Password Input Container -->
-      <div id="api-key-container" class="bg-white p-6 rounded-lg shadow-md mb-8">
+      <!-- Password Input Container (Hidden with auto-unlock) -->
+      <div id="api-key-container" class="hidden bg-white p-6 rounded-lg shadow-md mb-8">
         <h4 class="text-xl font-bold mb-4">Unlock PersonaZoo</h4>
         <p class="mb-4">Please enter the password to unlock the AI chat functionality.</p>
         
@@ -135,8 +135,8 @@
         </button>
       </div>
       
-      <!-- Chat Container (Hidden until unlocked) -->
-      <div id="chat-container" class="hidden">
+      <!-- Chat Container (Visible by default with auto-unlock) -->
+      <div id="chat-container">
         <!-- Persona Selection -->
         <div class="mb-8">
           <h4 class="text-xl font-bold mb-4">Choose a Persona</h4>
@@ -159,9 +159,6 @@
             <div class="ml-auto">
               <button id="clear-chat" class="text-blue-200 hover:text-white" title="Clear chat history">
                 <i class="fas fa-trash-alt"></i>
-              </button>
-              <button id="lock-chat" class="text-blue-200 hover:text-white ml-4" title="Lock Chat">
-                <i class="fas fa-lock"></i>
               </button>
             </div>
           </div>
@@ -230,8 +227,8 @@
   <!-- Import personas.js -->
   <script src="js/personas.js"></script>
   
-  <!-- Import OpenAI chat integration with encryption -->
-  <script src="js/openai-chat-encrypted.js"></script>
+  <!-- Import OpenAI chat integration with auto-unlock -->
+  <script src="js/openai-chat-auto-unlock.js"></script>
   
   <!-- JavaScript for chat functionality -->
   <script>
@@ -275,13 +272,15 @@
       const chatInput = document.getElementById('chat-input');
       const chatMessages = document.getElementById('chat-messages');
       const clearChatButton = document.getElementById('clear-chat');
-      const lockChatButton = document.getElementById('lock-chat');
       
       // Current active persona
       let activePersonaKey = defaultPersona;
       
       // Generate persona selection cards
       generatePersonaCards();
+      
+      // Add initial welcome message
+      addWelcomeMessage(activePersonaKey);
       
       // Handle form submission
       chatForm.addEventListener('submit', async function(e) {
@@ -320,20 +319,6 @@
         
         // Add welcome message
         addWelcomeMessage(activePersonaKey);
-      });
-      
-      // Handle lock chat button
-      lockChatButton.addEventListener('click', function() {
-        // Clear API key from memory
-        openaiApiKey = null;
-        
-        // Show password input, hide chat
-        document.getElementById('api-key-container').classList.remove('hidden');
-        document.getElementById('chat-container').classList.add('hidden');
-        
-        // Clear password input
-        document.getElementById('password-input').value = '';
-        document.getElementById('password-status').textContent = '';
       });
       
       // Function to generate persona selection cards
