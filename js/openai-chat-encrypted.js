@@ -1,7 +1,7 @@
 // openai-chat-encrypted.js - Handles OpenAI API integration for PersonaZoo with encrypted API key
 
 // Encrypted API key (will be replaced with your encrypted key)
-const ENCRYPTED_API_KEY = "AAJAAB4KWx91IBsDPikqU11rLF4gGy1XAUp4Ml0uXQsQWgR+EiEjMSQsQQVlJSUqBQEmfGFfKzpaQy1Va2dqPQICQQI/emAFJ14eQVsOCAYKLD1eMgAHWnR5ETkMRghIeH9kBBgsNhxTZnMEAgIrNVlUWwtKEDlYAEEIWnxREjsoQyYkfkJFF1orP10rYgYeBicARTsORARfHRBANR8mQGFdACg=";
+const ENCRYPTED_API_KEY = "REPLACE_WITH_YOUR_ENCRYPTED_API_KEY";
 
 // Function to decrypt the API key using a password
 function decryptApiKey(password) {
