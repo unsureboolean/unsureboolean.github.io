@@ -119,24 +119,24 @@
         Experience a conversation with one of our AI personas. Select a persona and start chatting!
       </p>
       
-      <!-- API Key Input Container (Hidden by default) -->
-      <div id="api-key-container" class="hidden bg-white p-6 rounded-lg shadow-md mb-8">
-        <h4 class="text-xl font-bold mb-4">Connect Your OpenAI API Key</h4>
-        <p class="mb-4">To use the AI chat functionality, please enter your OpenAI API key below. Your key is stored locally in your browser and is never sent to our servers.</p>
+      <!-- Password Input Container -->
+      <div id="api-key-container" class="bg-white p-6 rounded-lg shadow-md mb-8">
+        <h4 class="text-xl font-bold mb-4">Unlock PersonaZoo</h4>
+        <p class="mb-4">Please enter the password to unlock the AI chat functionality.</p>
         
         <div class="mb-4">
-          <label for="openai-api-key" class="block text-sm font-bold mb-2">OpenAI API Key</label>
-          <input type="password" id="openai-api-key" class="w-full border rounded px-3 py-2" placeholder="sk-..." />
-          <p id="api-key-status" class="text-sm mt-1"></p>
+          <label for="password-input" class="block text-sm font-bold mb-2">Password</label>
+          <input type="password" id="password-input" class="w-full border rounded px-3 py-2" placeholder="Enter password" />
+          <p id="password-status" class="text-sm mt-1"></p>
         </div>
         
-        <button id="save-api-key" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
-          Save API Key
+        <button id="unlock-button" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
+          Unlock Chat
         </button>
       </div>
       
-      <!-- Chat Container (Visible by default) -->
-      <div id="chat-container">
+      <!-- Chat Container (Hidden until unlocked) -->
+      <div id="chat-container" class="hidden">
         <!-- Persona Selection -->
         <div class="mb-8">
           <h4 class="text-xl font-bold mb-4">Choose a Persona</h4>
@@ -159,6 +159,9 @@
             <div class="ml-auto">
               <button id="clear-chat" class="text-blue-200 hover:text-white" title="Clear chat history">
                 <i class="fas fa-trash-alt"></i>
+              </button>
+              <button id="lock-chat" class="text-blue-200 hover:text-white ml-4" title="Lock Chat">
+                <i class="fas fa-lock"></i>
               </button>
             </div>
           </div>
@@ -227,8 +230,8 @@
   <!-- Import personas.js -->
   <script src="js/personas.js"></script>
   
-  <!-- Import OpenAI chat integration -->
-  <script src="js/openai-chat.js"></script>
+  <!-- Import OpenAI chat integration with encryption -->
+  <script src="js/openai-chat-encrypted.js"></script>
   
   <!-- JavaScript for chat functionality -->
   <script>
@@ -272,15 +275,13 @@
       const chatInput = document.getElementById('chat-input');
       const chatMessages = document.getElementById('chat-messages');
       const clearChatButton = document.getElementById('clear-chat');
+      const lockChatButton = document.getElementById('lock-chat');
       
       // Current active persona
       let activePersonaKey = defaultPersona;
       
       // Generate persona selection cards
       generatePersonaCards();
-      
-      // Add welcome message from default persona
-      addWelcomeMessage(activePersonaKey);
       
       // Handle form submission
       chatForm.addEventListener('submit', async function(e) {
@@ -319,6 +320,20 @@
         
         // Add welcome message
         addWelcomeMessage(activePersonaKey);
+      });
+      
+      // Handle lock chat button
+      lockChatButton.addEventListener('click', function() {
+        // Clear API key from memory
+        openaiApiKey = null;
+        
+        // Show password input, hide chat
+        document.getElementById('api-key-container').classList.remove('hidden');
+        document.getElementById('chat-container').classList.add('hidden');
+        
+        // Clear password input
+        document.getElementById('password-input').value = '';
+        document.getElementById('password-status').textContent = '';
       });
       
       // Function to generate persona selection cards
