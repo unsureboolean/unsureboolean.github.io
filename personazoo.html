@@ -1,477 +1,235 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PersonaZoo - Jeff Tuel</title>
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-  <style>
-    .chat-message {
-      transition: all 0.3s ease;
-    }
-    .chat-message:hover {
-      transform: translateY(-2px);
-    }
-    .typing-indicator span {
-      animation: blink 1.4s infinite both;
-    }
-    .typing-indicator span:nth-child(2) {
-      animation-delay: 0.2s;
-    }
-    .typing-indicator span:nth-child(3) {
-      animation-delay: 0.4s;
-    }
-    @keyframes blink {
-      0% { opacity: 0.1; }
-      20% { opacity: 1; }
-      100% { opacity: 0.1; }
-    }
-    .persona-option {
-      transition: all 0.3s ease;
-    }
-    .persona-option:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
-    .persona-option.selected {
-      border-color: #3b82f6;
-      background-color: #eff6ff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PersonaZoo - Chat with AI Personas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="icon" href="favicon.ico">
+    <style>
+        .hidden {
+            display: none;
+        }
+        .chat-message {
+            word-wrap: break-word;
+        }
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            margin: 0 2px;
+            background-color: #8B8B8B;
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes bounce {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-5px);
+            }
+        }
+        .persona-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .persona-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .persona-card.selected {
+            border: 2px solid #4299e1;
+            transform: translateY(-5px);
+        }
+    </style>
 </head>
-
-<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
-  <!-- Navigation -->
-  <header class="bg-blue-900 text-white p-6 sticky top-0 z-50">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold">Jeff Tuel</h1>
-      
-      <!-- Mobile menu button -->
-      <button id="mobile-menu-button" class="sm:hidden text-white focus:outline-none" aria-label="Toggle navigation menu">
-        <i class="fas fa-bars text-xl"></i>
-      </button>
-
-      <!-- Navigation for desktop -->
-      <nav id="desktop-nav" class="hidden sm:block">
-        <ul class="flex space-x-6">
-          <li><a href="index.html#about" class="hover:text-blue-200 underline-offset-4 hover:underline">About</a></li>
-          <li><a href="index.html#experience" class="hover:text-blue-200 underline-offset-4 hover:underline">Experience</a></li>
-          <li><a href="index.html#projects" class="hover:text-blue-200 underline-offset-4 hover:underline">Projects</a></li>
-          <li><a href="index.html#personal" class="hover:text-blue-200 underline-offset-4 hover:underline">Personal Life</a></li>
-          <li><a href="index.html#beliefs" class="hover:text-blue-200 underline-offset-4 hover:underline">Beliefs</a></li>
-          <li><a href="index.html#contact" class="hover:text-blue-200 underline-offset-4 hover:underline">Contact</a></li>
-          <li><a href="aiartwork.html" class="hover:text-blue-200 underline-offset-4 hover:underline">AI Artwork</a></li>
-          <li><a href="personazoo.html" class="hover:text-blue-200 underline-offset-4 hover:underline font-bold">PersonaZoo</a></li>
-        </ul>
-      </nav>
-    </div>
-    
-    <!-- Mobile navigation dropdown menu -->
-    <nav id="mobile-nav" class="hidden mt-4 sm:hidden">
-      <ul class="flex flex-col space-y-4">
-        <li><a href="index.html#about" class="block hover:text-blue-200 underline-offset-4 hover:underline">About</a></li>
-        <li><a href="index.html#experience" class="block hover:text-blue-200 underline-offset-4 hover:underline">Experience</a></li>
-        <li><a href="index.html#projects" class="block hover:text-blue-200 underline-offset-4 hover:underline">Projects</a></li>
-        <li><a href="index.html#personal" class="block hover:text-blue-200 underline-offset-4 hover:underline">Personal Life</a></li>
-        <li><a href="index.html#beliefs" class="block hover:text-blue-200 underline-offset-4 hover:underline">Beliefs</a></li>
-        <li><a href="index.html#contact" class="block hover:text-blue-200 underline-offset-4 hover:underline">Contact</a></li>
-        <li><a href="aiartwork.html" class="block hover:text-blue-200 underline-offset-4 hover:underline">AI Artwork</a></li>
-        <li><a href="personazoo.html" class="block hover:text-blue-200 underline-offset-4 hover:underline font-bold">PersonaZoo</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="bg-blue-100 py-16 sm:py-20">
-    <div class="max-w-6xl mx-auto text-center px-4 sm:px-6">
-      <h2 class="text-2xl sm:text-4xl font-extrabold mb-4">PersonaZoo</h2>
-      <p class="text-lg sm:text-xl mb-6">Experience AI personas with unique personalities and expertise</p>
-      <div class="flex justify-center">
-        <img src="images/PersonaZoo.png" alt="PersonaZoo Logo" class="h-32 w-auto rounded-lg shadow-lg transition-transform duration-300 hover:scale-110" />
-      </div>
-    </div>
-  </section>
-
-  <!-- About PersonaZoo Section -->
-  <section class="py-16 px-4 sm:px-6 scroll-fade">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">About PersonaZoo</h3>
-      <p class="mb-4">
-        PersonaZoo is a platform that brings AI personas to life, each with their own unique personality, expertise, and communication style. These personas can help with various tasks, provide specialized knowledge, or simply engage in interesting conversations.
-      </p>
-      <p>
-        Whether you need technical assistance, creative inspiration, or just someone to chat with, PersonaZoo has a persona that fits your needs. Try out our interactive demo below to experience the power of AI personas firsthand.
-      </p>
-    </div>
-  </section>
-
-  <!-- Interactive Chat Demo -->
-  <section class="bg-gray-100 py-16 px-4 sm:px-6 scroll-fade">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">Chat with AI Personas</h3>
-      <p class="mb-8">
-        Experience a conversation with one of our AI personas. Select a persona and start chatting!
-      </p>
-      
-      <!-- Password Input Container (Hidden with auto-unlock) -->
-      <div id="api-key-container" class="hidden bg-white p-6 rounded-lg shadow-md mb-8">
-        <h4 class="text-xl font-bold mb-4">Unlock PersonaZoo</h4>
-        <p class="mb-4">Please enter the password to unlock the AI chat functionality.</p>
-        
-        <div class="mb-4">
-          <label for="password-input" class="block text-sm font-bold mb-2">Password</label>
-          <input type="password" id="password-input" class="w-full border rounded px-3 py-2" placeholder="Enter password" />
-          <p id="password-status" class="text-sm mt-1"></p>
+<body class="bg-gray-100 min-h-screen">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold flex items-center">
+                <i class="fas fa-robot mr-2"></i>
+                PersonaZoo
+            </h1>
+            <nav>
+                <a href="index.html" class="text-white hover:text-blue-200 transition-colors">
+                    <i class="fas fa-home mr-1"></i>
+                    Home
+                </a>
+            </nav>
         </div>
-        
-        <button id="unlock-button" class="bg-blue-900 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
-          Unlock Chat
-        </button>
-      </div>
-      
-      <!-- Chat Container (Visible by default with auto-unlock) -->
-      <div id="chat-container">
-        <!-- Persona Selection -->
-        <div class="mb-8">
-          <h4 class="text-xl font-bold mb-4">Choose a Persona</h4>
-          <div id="persona-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <!-- Persona cards will be dynamically generated here -->
-          </div>
-        </div>
-        
-        <!-- Chat Interface -->
-        <div class="bg-white rounded-lg shadow-md overflow-hidden">
-          <!-- Chat Header -->
-          <div class="bg-blue-900 text-white p-4 flex items-center">
-            <div id="active-persona-icon" class="bg-blue-800 rounded-full p-2 mr-3">
-              <i class="fas fa-robot"></i>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto p-4 mt-8">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold mb-4 text-blue-900 flex items-center">
+                    <i class="fas fa-comments mr-2"></i>
+                    Chat with AI Personas
+                </h2>
+                <p class="mb-6">
+                    Welcome to PersonaZoo! Chat with various AI personas, each with their own unique personality and style. 
+                    Select a persona from the options below and start chatting!
+                </p>
+
+                <!-- API Key Input (Hidden by default with auto-unlock) -->
+                <div id="api-key-container" class="mb-6 p-4 bg-blue-50 rounded-lg">
+                    <h3 class="text-lg font-semibold mb-2">Enter Password to Unlock Chat</h3>
+                    <div class="flex">
+                        <input type="password" id="api-key-input" placeholder="Enter password" 
+                            class="flex-grow border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                        <button id="unlock-button" class="ml-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-all">
+                            <i class="fas fa-unlock mr-1"></i> Unlock
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Chat Interface (Hidden until unlocked) -->
+                <div id="chat-container" class="hidden">
+                    <!-- Persona Selection -->
+                    <div class="mb-6">
+                        <h3 class="text-lg font-semibold mb-3">Choose a Persona:</h3>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                            <div class="persona-card bg-blue-100 p-3 rounded-lg text-center selected" data-persona="helpful_assistant">
+                                <i class="fas fa-robot text-3xl text-blue-500 mb-2"></i>
+                                <p class="font-medium">Helpful Assistant</p>
+                            </div>
+                            <div class="persona-card bg-purple-100 p-3 rounded-lg text-center" data-persona="tobias_funke">
+                                <i class="fas fa-theater-masks text-3xl text-purple-500 mb-2"></i>
+                                <p class="font-medium">Tobias Fünke</p>
+                            </div>
+                            <div class="persona-card bg-yellow-100 p-3 rounded-lg text-center" data-persona="butters_stotch">
+                                <i class="fas fa-child text-3xl text-yellow-500 mb-2"></i>
+                                <p class="font-medium">Butters Stotch</p>
+                            </div>
+                            <div class="persona-card bg-green-100 p-3 rounded-lg text-center" data-persona="sheldon_cooper">
+                                <i class="fas fa-atom text-3xl text-green-500 mb-2"></i>
+                                <p class="font-medium">Sheldon Cooper</p>
+                            </div>
+                            <div class="persona-card bg-teal-100 p-3 rounded-lg text-center" data-persona="socrates">
+                                <i class="fas fa-scroll text-3xl text-teal-500 mb-2"></i>
+                                <p class="font-medium">Socrates</p>
+                            </div>
+                            <div class="persona-card bg-brown-100 p-3 rounded-lg text-center" data-persona="jack_sparrow">
+                                <i class="fas fa-ship text-3xl text-yellow-700 mb-2"></i>
+                                <p class="font-medium">Jack Sparrow</p>
+                            </div>
+                            <div class="persona-card bg-orange-100 p-3 rounded-lg text-center" data-persona="homer_simpson">
+                                <i class="fas fa-cookie-bite text-3xl text-orange-500 mb-2"></i>
+                                <p class="font-medium">Homer Simpson</p>
+                            </div>
+                        </div>
+                        <select id="persona-select" class="hidden">
+                            <option value="helpful_assistant">Helpful Assistant</option>
+                            <option value="tobias_funke">Tobias Fünke</option>
+                            <option value="butters_stotch">Butters Stotch</option>
+                            <option value="sheldon_cooper">Sheldon Cooper</option>
+                            <option value="socrates">Socrates</option>
+                            <option value="jack_sparrow">Jack Sparrow</option>
+                            <option value="homer_simpson">Homer Simpson</option>
+                        </select>
+                    </div>
+
+                    <!-- Chat Messages -->
+                    <div id="chat-messages" class="bg-gray-50 p-4 rounded-lg h-96 overflow-y-auto mb-4 border">
+                        <!-- Messages will be added here dynamically -->
+                    </div>
+
+                    <!-- Message Input -->
+                    <div class="flex">
+                        <input type="text" id="message-input" placeholder="Type your message..." 
+                            class="flex-grow border rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all">
+                        <button id="send-button" class="bg-blue-600 text-white px-4 py-2 rounded-r hover:bg-blue-700 transition-all">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+
+                    <!-- Clear Chat Button -->
+                    <div class="mt-4 text-right">
+                        <button id="clear-button" class="text-sm text-gray-600 hover:text-gray-800 transition-colors">
+                            <i class="fas fa-trash-alt mr-1"></i> Clear Chat
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div>
-              <h4 id="active-persona-name" class="font-bold">Helpful Assistant</h4>
-              <p class="text-sm text-blue-200">AI Persona</p>
+
+            <!-- About PersonaZoo -->
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold mb-4 text-blue-900">About PersonaZoo</h2>
+                <p class="mb-4">
+                    PersonaZoo is an interactive chat experience that lets you converse with AI personas based on 
+                    fictional characters and archetypes. Each persona has its own unique personality, speech patterns, 
+                    and knowledge base.
+                </p>
+                <p class="mb-4">
+                    This project uses OpenAI's API to generate responses that match the selected persona's character.
+                    The personas are designed to be entertaining and engaging, providing a fun way to interact with AI.
+                </p>
+                <p>
+                    Created by Jeff Tuel as a demonstration of AI character simulation and interactive web experiences.
+                </p>
             </div>
-            <div class="ml-auto">
-              <button id="clear-chat" class="text-blue-200 hover:text-white" title="Clear chat history">
-                <i class="fas fa-trash-alt"></i>
-              </button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-blue-900 text-white text-center p-6 mt-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-center space-x-6 mb-4">
+                <a href="https://linkedin.com/in/jeff-tuel" target="_blank" rel="noopener noreferrer" class="text-white hover:text-blue-200 transition-colors">
+                    <i class="fab fa-linkedin text-2xl"></i>
+                </a>
+                <a href="mailto:contact@jefftuel.com" class="text-white hover:text-blue-200 transition-colors">
+                    <i class="fas fa-envelope text-2xl"></i>
+                </a>
             </div>
-          </div>
-          
-          <!-- Chat Messages -->
-          <div id="chat-messages" class="h-96 overflow-y-auto p-4 space-y-4">
-            <!-- Welcome message will be added dynamically -->
-          </div>
-          
-          <!-- Chat Input -->
-          <div class="border-t p-4">
-            <form id="chat-form" class="flex">
-              <input type="text" id="chat-input" placeholder="Type your message..." class="flex-grow border rounded-l px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-              <button type="submit" class="bg-blue-900 text-white px-4 py-2 rounded-r hover:bg-blue-700 transition-colors">
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="py-16 px-4 sm:px-6 scroll-fade">
-    <div class="max-w-4xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6">Features</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div class="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-          <div class="text-blue-900 text-3xl mb-4">
-            <i class="fas fa-brain"></i>
-          </div>
-          <h4 class="text-xl font-bold mb-2">Specialized Knowledge</h4>
-          <p>Each persona is trained with specialized knowledge in their domain of expertise.</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-          <div class="text-blue-900 text-3xl mb-4">
-            <i class="fas fa-user-friends"></i>
-          </div>
-          <h4 class="text-xl font-bold mb-2">Unique Personalities</h4>
-          <p>Personas have distinct personalities, communication styles, and approaches to problem-solving.</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-          <div class="text-blue-900 text-3xl mb-4">
-            <i class="fas fa-comments"></i>
-          </div>
-          <h4 class="text-xl font-bold mb-2">Natural Conversations</h4>
-          <p>Engage in flowing, natural conversations that adapt to your needs and questions.</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md transition-transform duration-300 hover:scale-105">
-          <div class="text-blue-900 text-3xl mb-4">
-            <i class="fas fa-tasks"></i>
-          </div>
-          <h4 class="text-xl font-bold mb-2">Task Assistance</h4>
-          <p>Get help with specific tasks, from creative brainstorming to technical troubleshooting.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer class="bg-blue-900 text-white text-center p-6 mt-12">
-    <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
-  </footer>
-
-  <!-- Import personas.js -->
-  <script src="js/personas.js"></script>
-  
-  <!-- Import OpenAI chat integration with auto-unlock -->
-  <script src="js/openai-chat-auto-unlock.js"></script>
-  
-  <!-- JavaScript for chat functionality -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      // Make personas available globally
-      window.personas = personas;
-      window.defaultPersona = defaultPersona;
-      
-      // Mobile menu functionality
-      const mobileMenuButton = document.getElementById('mobile-menu-button');
-      const mobileNav = document.getElementById('mobile-nav');
-      
-      // Toggle mobile menu visibility
-      mobileMenuButton.addEventListener('click', function() {
-        mobileNav.classList.toggle('hidden');
-        
-        // Change icon based on menu state
-        const menuIcon = mobileMenuButton.querySelector('i');
-        if (mobileNav.classList.contains('hidden')) {
-          menuIcon.classList.remove('fa-times');
-          menuIcon.classList.add('fa-bars');
-        } else {
-          menuIcon.classList.remove('fa-bars');
-          menuIcon.classList.add('fa-times');
-        }
-      });
-      
-      // Close menu when clicking a navigation link
-      const mobileNavLinks = mobileNav.querySelectorAll('a');
-      mobileNavLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          mobileNav.classList.add('hidden');
-          const menuIcon = mobileMenuButton.querySelector('i');
-          menuIcon.classList.remove('fa-times');
-          menuIcon.classList.add('fa-bars');
-        });
-      });
-
-      // Chat functionality
-      const chatForm = document.getElementById('chat-form');
-      const chatInput = document.getElementById('chat-input');
-      const chatMessages = document.getElementById('chat-messages');
-      const clearChatButton = document.getElementById('clear-chat');
-      
-      // Current active persona
-      let activePersonaKey = defaultPersona;
-      
-      // Generate persona selection cards
-      generatePersonaCards();
-      
-      // Add initial welcome message
-      addWelcomeMessage(activePersonaKey);
-      
-      // Handle form submission
-      chatForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const message = chatInput.value.trim();
-        if (message) {
-          // Add user message
-          addUserMessage(message);
-          chatInput.value = '';
-          
-          // Show typing indicator
-          showTypingIndicator();
-          
-          // Get response from OpenAI API
-          const response = await sendMessageToOpenAI(message, activePersonaKey);
-          
-          // Remove typing indicator
-          removeTypingIndicator();
-          
-          // Add persona response
-          if (response.success) {
-            addPersonaMessage(response.message);
-          } else {
-            addSystemMessage(response.message);
-          }
-          
-          // Scroll to bottom
-          chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-      });
-      
-      // Handle clear chat button
-      clearChatButton.addEventListener('click', function() {
-        // Clear chat messages
-        chatMessages.innerHTML = '';
-        
-        // Add welcome message
-        addWelcomeMessage(activePersonaKey);
-      });
-      
-      // Function to generate persona selection cards
-      function generatePersonaCards() {
-        const personaGrid = document.getElementById('persona-grid');
-        personaGrid.innerHTML = '';
-        
-        // Create a card for each persona
-        Object.keys(personas).forEach(key => {
-          const persona = personas[key];
-          const card = document.createElement('div');
-          card.className = `persona-option p-4 border rounded-lg cursor-pointer ${key === activePersonaKey ? 'selected' : ''}`;
-          card.dataset.personaKey = key;
-          
-          card.innerHTML = `
-            <div class="text-center mb-2">
-              <div class="inline-block bg-${persona.color}-100 text-${persona.color}-600 rounded-full p-3">
-                <i class="${persona.avatar} text-xl"></i>
-              </div>
+            <p>&copy; 2025 Jeff Tuel. All rights reserved.</p>
+            <div class="mt-2 flex justify-center space-x-4 text-sm">
+                <a href="index.html" class="text-blue-200 hover:text-white transition-colors">Home</a>
+                <a href="aiartwork.html" class="text-blue-200 hover:text-white transition-colors">AI Artwork</a>
             </div>
-            <h5 class="font-bold text-center">${persona.nickname}</h5>
-          `;
-          
-          // Add click event to select persona
-          card.addEventListener('click', function() {
-            // Update active persona
-            activePersonaKey = key;
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/personas-less-restricted.js"></script>
+    <script src="js/openai-chat-debug-fixed.js"></script>
+    <script>
+        // Additional script for persona card selection
+        document.addEventListener('DOMContentLoaded', function() {
+            const personaCards = document.querySelectorAll('.persona-card');
+            const personaSelect = document.getElementById('persona-select');
             
-            // Update selected card styling
-            document.querySelectorAll('.persona-option').forEach(card => {
-              card.classList.remove('selected');
+            personaCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selected class from all cards
+                    personaCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selected class to clicked card
+                    this.classList.add('selected');
+                    
+                    // Update hidden select value
+                    const personaValue = this.getAttribute('data-persona');
+                    personaSelect.value = personaValue;
+                    
+                    console.log('Selected persona:', personaValue);
+                });
             });
-            card.classList.add('selected');
-            
-            // Update active persona display
-            updateActivePersonaDisplay();
-            
-            // Clear chat and add welcome message
-            chatMessages.innerHTML = '';
-            addWelcomeMessage(activePersonaKey);
-          });
-          
-          personaGrid.appendChild(card);
         });
-      }
-      
-      // Function to update active persona display
-      function updateActivePersonaDisplay() {
-        const persona = personas[activePersonaKey];
-        document.getElementById('active-persona-name').textContent = persona.nickname;
-        
-        const iconElement = document.getElementById('active-persona-icon');
-        iconElement.className = `bg-${persona.color}-800 rounded-full p-2 mr-3`;
-        iconElement.innerHTML = `<i class="${persona.avatar}"></i>`;
-      }
-      
-      // Function to add welcome message
-      function addWelcomeMessage(personaKey) {
-        const persona = personas[personaKey];
-        let welcomeMessage = `Hello! I'm ${persona.nickname}. How can I help you today?`;
-        
-        // Special welcome messages for certain personas
-        if (personaKey === 'socrates') {
-          welcomeMessage = "Greetings, seeker of wisdom! I am Socrates, ready to explore the depths of philosophical thought with you. What truth shall we pursue today?";
-        } else if (personaKey === 'jack_sparrow') {
-          welcomeMessage = "Ahoy there! Captain Jack Sparrow at your service. What manner of conversational treasure are we hunting for today, savvy?";
-        } else if (personaKey === 'homer_simpson') {
-          welcomeMessage = "Hey there! Homer Simpson here. Got any donuts? Or maybe a Duff? What's on your mind?";
-        }
-        
-        addPersonaMessage(welcomeMessage);
-      }
-      
-      // Add user message to chat
-      function addUserMessage(message) {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'chat-message user-message flex items-start justify-end';
-        messageElement.innerHTML = `
-          <div class="bg-blue-900 text-white rounded-lg p-3 max-w-3/4">
-            <p class="text-sm">${message}</p>
-          </div>
-          <div class="flex-shrink-0 bg-blue-900 rounded-full p-2 ml-3">
-            <svg class="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
-            </svg>
-          </div>
-        `;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-      
-      // Add persona message to chat
-      function addPersonaMessage(message) {
-        const persona = personas[activePersonaKey];
-        const messageElement = document.createElement('div');
-        messageElement.className = 'chat-message persona-message flex items-start';
-        messageElement.innerHTML = `
-          <div class="flex-shrink-0 bg-${persona.color}-100 rounded-full p-2 mr-3">
-            <i class="${persona.avatar} text-${persona.color}-600"></i>
-          </div>
-          <div class="bg-${persona.color}-100 rounded-lg p-3 max-w-3/4">
-            <p class="text-sm">${message}</p>
-          </div>
-        `;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-      
-      // Add system message to chat (for errors, notifications)
-      function addSystemMessage(message) {
-        const messageElement = document.createElement('div');
-        messageElement.className = 'chat-message system-message flex items-start justify-center';
-        messageElement.innerHTML = `
-          <div class="bg-gray-200 rounded-lg p-3 max-w-3/4 text-center">
-            <p class="text-sm text-gray-700"><i class="fas fa-info-circle mr-2"></i>${message}</p>
-          </div>
-        `;
-        chatMessages.appendChild(messageElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-      
-      // Show typing indicator
-      function showTypingIndicator() {
-        const persona = personas[activePersonaKey];
-        const indicatorElement = document.createElement('div');
-        indicatorElement.id = 'typing-indicator';
-        indicatorElement.className = 'chat-message flex items-start';
-        indicatorElement.innerHTML = `
-          <div class="flex-shrink-0 bg-${persona.color}-100 rounded-full p-2 mr-3">
-            <i class="${persona.avatar} text-${persona.color}-600"></i>
-          </div>
-          <div class="bg-${persona.color}-100 rounded-lg p-3">
-            <p class="text-sm typing-indicator">
-              <span>.</span><span>.</span><span>.</span>
-            </p>
-          </div>
-        `;
-        chatMessages.appendChild(indicatorElement);
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-      }
-      
-      // Remove typing indicator
-      function removeTypingIndicator() {
-        const indicator = document.getElementById('typing-indicator');
-        if (indicator) {
-          indicator.remove();
-        }
-      }
-    });
-  </script>
-
-  <!-- Import animations.js -->
-  <script src="js/animations.js"></script>
+    </script>
 </body>
-
 </html>
