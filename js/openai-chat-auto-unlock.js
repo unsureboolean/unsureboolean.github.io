@@ -1,7 +1,7 @@
 // openai-chat-auto-unlock.js - Handles OpenAI API integration for PersonaZoo with encrypted API key and auto-unlock
 
 // Encrypted API key (will be replaced with your encrypted key)
-const ENCRYPTED_API_KEY = "AAJAAB4KWx91IBsDPikqU11rLF4gGy1XAUp4Ml0uXQsQWgR+EiEjMSQsQQVlJSUqBQEmfGFfKzpaQy1Va2dqPQICQQI/emAFJ14eQVsOCAYKLD1eMgAHWnR5ETkMRghIeH9kBBgsNhxTZnMEAgIrNVlUWwtKEDlYAEEIWnxREjsoQyYkfkJFF1orP10rYgYeBicARTsORARfHRBANR8mQGFdACg=";
+const ENCRYPTED_API_KEY = "REPLACE_WITH_YOUR_ENCRYPTED_API_KEY";
 
 // The password used for decryption (this should match what you used for encryption)
 const AUTO_UNLOCK_PASSWORD = "simple123"; // Replace with your actual password
@@ -164,7 +164,7 @@ async function sendMessageToOpenAI(message, personaKey) {
         
         // Make API request directly to OpenAI
         const requestBody = {
-            model: "gpt-4o",
+            model: "gpt-3.5-turbo",
             messages: conversationHistory,
             max_tokens: 150,
             temperature: 0.7
