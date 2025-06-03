@@ -4,7 +4,7 @@
 const ENCRYPTED_API_KEY = "AAJAAB4KWx9KFw8uEilSe2BxXgAsBlwQRVRUHiwOBQ4TVnADJg1VB1hcAAJVIDwnKQAUX0d1NDwyNTw/W11QNwILMzpWQ2MAHj0hNTgrVX9EKT1eMgAHWnR5FVpYNic3ewZQBx4bXTQmUHF9BBMHMRoxaEADRgcjSQgQaW1SOx88ESk6d0ZYITgIAAkoBlhbCjE9BDYVcGdAXgssRy5UeXN1HCg=";
 
 // The password used for decryption (this should match what you used for encryption)
-const AUTO_UNLOCK_PASSWORD = "simple123"; // Replace with your actual password
+const AUTO_UNLOCK_PASSWORD = "simple123"; // Replace with your password
 
 // Function to decrypt the API key using a password
 function decryptApiKey(password) {
