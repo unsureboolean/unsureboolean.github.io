@@ -164,10 +164,11 @@ async function sendMessageToOpenAI(message, personaKey) {
         
         // Make API request directly to OpenAI
         const requestBody = {
-            model: "gpt-4.1-nano",
+            model: "gpt-4o",
             messages: conversationHistory,
-            max_tokens: 250,
-            temperature: 0.7
+            max_tokens: 350,
+            temperature: 0.8
+            safe_prompt: false  // Activate this line to reduce some safety measures
         };
         
         console.log('Request payload prepared, attempting fetch...');
