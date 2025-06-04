@@ -8,7 +8,7 @@ const AUTO_UNLOCK_PASSWORD = "simple123"; // Replace with your actual password
 
 // Customizable OpenAI settings
 const OPENAI_SETTINGS = {
-  model: "gpt-4", // Options: "gpt-3.5-turbo", "gpt-4", "gpt-4-turbo", "gpt-4o"
+  model: "gpt-4.1", // Options: "gpt-3.5-turbo", "gpt-4", "gpt-4-turbo", "gpt-4o"
   temperature: 1.0, // Range: 0.0 to 2.0 (higher = more creative/random)
   max_tokens: 250, // Maximum length of response
   // safe_prompt: false, // Set to false to reduce some safety measures
