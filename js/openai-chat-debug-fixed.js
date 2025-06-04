@@ -8,7 +8,7 @@ const AUTO_UNLOCK_PASSWORD = "simple123";
 
 // Customizable OpenAI settings
 const OPENAI_SETTINGS = {
-  model: "gpt-4o", // User's preferred model
+  model: "gpt-4.1", // User's preferred model
   temperature: 1.2, // Increased for more creative/less filtered responses
   max_tokens: 300, // Increased for longer responses
   presence_penalty: 0.8, // Increased to encourage novel content
