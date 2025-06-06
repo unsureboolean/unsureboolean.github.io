@@ -108,7 +108,13 @@ const personas = {
 // Default persona to use if none is specified
 const defaultPersona = "zookeeper";
 
-// Export the personas and default persona
+// Assign to window object for browser compatibility
+if (typeof window !== 'undefined') {
+    window.personas = personas;
+    window.defaultPersona = defaultPersona;
+}
+
+// Export for Node.js compatibility
 if (typeof module !== 'undefined') {
     module.exports = { personas, defaultPersona };
 }

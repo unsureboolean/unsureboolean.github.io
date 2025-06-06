@@ -116,7 +116,19 @@
                         
                         <!-- Dropdown Menus -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <!-- Entertainment Personas Dropdown -->
+                            <!-- Professional Personas Dropdown (Now First) -->
+                            <div>
+                                <label for="professional-select" class="block text-sm font-medium text-gray-700 mb-1">Professional Advisors:</label>
+                                <select id="professional-select" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                                    <option value="zookeeper">Zookeeper (Guide)</option>
+                                    <option value="career_coach">Career-Change Coach</option>
+                                    <option value="interview_assistant">Interview Assistant</option>
+                                    <option value="salary_negotiator">Salary Negotiation Strategist</option>
+                                    <option value="productivity_consultant">Personal Productivity Consultant</option>
+                                </select>
+                            </div>
+                            
+                            <!-- Entertainment Personas Dropdown (Now Second) -->
                             <div>
                                 <label for="entertainment-select" class="block text-sm font-medium text-gray-700 mb-1">Entertainment Characters:</label>
                                 <select id="entertainment-select" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -129,23 +141,11 @@
                                     <option value="frank_reynolds">Frank Reynolds</option>
                                 </select>
                             </div>
-                            
-                            <!-- Professional Personas Dropdown -->
-                            <div>
-                                <label for="professional-select" class="block text-sm font-medium text-gray-700 mb-1">Professional Advisors:</label>
-                                <select id="professional-select" class="w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500">
-                                    <option value="zookeeper">Zookeeper (Guide)</option>
-                                    <option value="career_coach">Career-Change Coach</option>
-                                    <option value="interview_assistant">Interview Assistant</option>
-                                    <option value="salary_negotiator">Salary Negotiation Strategist</option>
-                                    <option value="productivity_consultant">Personal Productivity Consultant</option>
-                                </select>
-                            </div>
                         </div>
                         
                         <!-- Current Persona Display -->
                         <div id="current-persona" class="bg-blue-50 p-3 rounded-lg flex items-center">
-                            <i class="fas fa-hat-wizard text-2xl text-blue-500 mr-3"></i>
+                            <i id="current-persona-icon" class="fas fa-hat-wizard text-2xl text-blue-500 mr-3"></i>
                             <div>
                                 <p class="font-medium">Currently chatting with: <span id="current-persona-name">Zookeeper</span></p>
                                 <p class="text-sm text-gray-600">Select a different persona from the dropdowns above</p>
@@ -237,11 +237,30 @@
     <script>
         // Additional script for dropdown persona selection
         document.addEventListener('DOMContentLoaded', function() {
+            // Make sure personas are loaded before proceeding
+            if (typeof window.personas === 'undefined') {
+                console.error('Error: window.personas is undefined. Personas script may not be loaded correctly.');
+                const chatMessages = document.getElementById('chat-messages');
+                if (chatMessages) {
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'chat-message error-message bg-red-100 p-3 rounded-lg mb-2 max-w-3/4';
+                    errorMessage.innerHTML = `
+                        <div class="flex items-center mb-1">
+                            <i class="fas fa-exclamation-circle text-red-500 mr-2"></i>
+                            <span class="font-bold">Error</span>
+                        </div>
+                        <p>Network Error: window.personas is undefined. Please check your connection and try again.</p>
+                    `;
+                    chatMessages.appendChild(errorMessage);
+                }
+                return;
+            }
+            
             const entertainmentSelect = document.getElementById('entertainment-select');
             const professionalSelect = document.getElementById('professional-select');
             const personaSelect = document.getElementById('persona-select');
             const currentPersonaName = document.getElementById('current-persona-name');
-            const currentPersonaIcon = document.querySelector('#current-persona i');
+            const currentPersonaIcon = document.getElementById('current-persona-icon');
             
             // Set default to Zookeeper
             personaSelect.value = "zookeeper";
@@ -254,7 +273,7 @@
                 updateCurrentPersonaDisplay(selectedValue);
                 
                 // Reset professional dropdown
-                professionalSelect.selectedIndex = 0;
+                professionalSelect.value = "zookeeper";
                 console.log('Selected entertainment persona:', selectedValue);
             });
             
@@ -264,8 +283,8 @@
                 personaSelect.value = selectedValue;
                 updateCurrentPersonaDisplay(selectedValue);
                 
-                // Reset entertainment dropdown
-                entertainmentSelect.selectedIndex = 0;
+                // Reset entertainment dropdown - don't select any option
+                entertainmentSelect.selectedIndex = -1;
                 console.log('Selected professional persona:', selectedValue);
             });
             
@@ -275,10 +294,21 @@
                     const persona = window.personas[personaKey];
                     currentPersonaName.textContent = persona.nickname;
                     
-                    // Update icon
+                    // Update icon - clear all classes first
                     currentPersonaIcon.className = '';
-                    currentPersonaIcon.classList.add(...persona.avatar.split(' '));
+                    
+                    // Add the icon classes
+                    const iconClasses = persona.avatar.split(' ');
+                    iconClasses.forEach(cls => {
+                        currentPersonaIcon.classList.add(cls);
+                    });
+                    
+                    // Add the color class
                     currentPersonaIcon.classList.add(`text-${persona.color}-500`);
+                    
+                    console.log(`Updated display to: ${persona.nickname} with icon ${persona.avatar}`);
+                } else {
+                    console.error(`Persona not found: ${personaKey}`);
                 }
             }
             
