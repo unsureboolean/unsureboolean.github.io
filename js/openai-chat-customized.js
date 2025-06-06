@@ -1,17 +1,17 @@
 // openai-chat-customized.js - Handles OpenAI API integration for PersonaZoo with encrypted API key, auto-unlock, and customizable model/moderation
 
 // Encrypted API key (will be replaced with your encrypted key)
-const ENCRYPTED_API_KEY = "AAJAAB4KWx91IBsDPikqU11rLF4gGy1XAUp4Ml0uXQsQWgR+EiEjMSQsQQVlJSUqBQEmfGFfKzpaQy1Va2dqPQICQQI/emAFJ14eQVsOCAYKLD1eMgAHWnR5ETkMRghIeH9kBBgsNhxTZnMEAgIrNVlUWwtKEDlYAEEIWnxREjsoQyYkfkJFF1orP10rYgYeBicARTsORARfHRBANR8mQGFdACg=";
+const ENCRYPTED_API_KEY = "REPLACE_WITH_YOUR_ENCRYPTED_API_KEY";
 
 // The password used for decryption (this should match what you used for encryption)
 const AUTO_UNLOCK_PASSWORD = "simple123"; // Replace with your actual password
 
 // Customizable OpenAI settings
 const OPENAI_SETTINGS = {
-  model: "gpt-4.1", // Options: "gpt-3.5-turbo", "gpt-4", "gpt-4-turbo", "gpt-4o"
+  model: "gpt-4", // Options: "gpt-3.5-turbo", "gpt-4", "gpt-4-turbo", "gpt-4o"
   temperature: 1.0, // Range: 0.0 to 2.0 (higher = more creative/random)
   max_tokens: 250, // Maximum length of response
-  // safe_prompt: false, // Set to false to reduce some safety measures
+  safe_prompt: false, // Set to false to reduce some safety measures
   presence_penalty: 0.6, // Range: -2.0 to 2.0 (positive values encourage new topics)
   frequency_penalty: 0.0 // Range: -2.0 to 2.0 (positive values discourage repetition)
 };
@@ -180,7 +180,7 @@ async function sendMessageToOpenAI(message, personaKey) {
             temperature: OPENAI_SETTINGS.temperature,
             presence_penalty: OPENAI_SETTINGS.presence_penalty,
             frequency_penalty: OPENAI_SETTINGS.frequency_penalty,
-            // safe_prompt: OPENAI_SETTINGS.safe_prompt
+            safe_prompt: OPENAI_SETTINGS.safe_prompt
         };
         
         console.log('Request payload prepared, attempting fetch...');

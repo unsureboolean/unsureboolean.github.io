@@ -1,14 +1,14 @@
 // openai-chat-debug-fixed.js - Enhanced debug version with user's credentials and fixes for non-responsive chat
 
 // User's encrypted API key (pre-filled)
-const ENCRYPTED_API_KEY = "AAJAAB4KWx91IBsDPikqU11rLF4gGy1XAUp4Ml0uXQsQWgR+EiEjMSQsQQVlJSUqBQEmfGFfKzpaQy1Va2dqPQICQQI/emAFJ14eQVsOCAYKLD1eMgAHWnR5ETkMRghIeH9kBBgsNhxTZnMEAgIrNVlUWwtKEDlYAEEIWnxREjsoQyYkfkJFF1orP10rYgYeBicARTsORARfHRBANR8mQGFdACg=";
+const ENCRYPTED_API_KEY = "AAJAAB4KWx91IBsDPikqU11rLF4gGy1XAUp4Ml0uXQsQWgR+EiEjMSQsQQVlJSUqBQEmfGFfKzpaQy1Va2dqPQICQQI/emAFJ14eQVsOCAYKLD1eMgAHWnR5ETkMRghIeH9kBBgsNhxTZnMEAgIrNVlUWwtKEDlYAEEIWnxREjsoQyYkfkJFF1orP10rYgYeBicARTsORARfHRBANR8mQGFdACg";
 
 // The password used for decryption (pre-filled)
 const AUTO_UNLOCK_PASSWORD = "simple123";
 
 // Customizable OpenAI settings
 const OPENAI_SETTINGS = {
-  model: "gpt-4.1", // User's preferred model
+  model: "gpt-4o", // User's preferred model
   temperature: 1.2, // Increased for more creative/less filtered responses
   max_tokens: 300, // Increased for longer responses
   presence_penalty: 0.8, // Increased to encourage novel content
