@@ -75,10 +75,21 @@
             font-weight: 500;
         }
         
+        .level-selector-container {
+            margin-top: 15px;
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
         .level-selector {
             display: flex;
             align-items: center;
             gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .level-btn {
@@ -252,8 +263,9 @@
         
         .toggle-container {
             display: flex;
+            flex-direction: column; /* MODIFIED: Stack toggle vertically */
             align-items: center;
-            gap: 10px;
+            gap: 8px; /* MODIFIED: Adjusted gap */
         }
         
         .toggle-label {
@@ -416,7 +428,6 @@
             background: rgba(244, 67, 54, 0.15) !important;
             border-color: rgba(244, 67, 54, 0.3) !important;
             color: #ff6b6b !important;
-            font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
             font-weight: 700 !important;
             animation: pulse 2s infinite;
         }
@@ -425,7 +436,6 @@
             background: rgba(76, 175, 80, 0.15) !important;
             border-color: rgba(76, 175, 80, 0.3) !important;
             color: #81c784 !important;
-            font-size: clamp(1.3rem, 5vw, 1.8rem) !important;
             font-weight: 700 !important;
             animation: celebrate 3s ease-in-out infinite;
         }
@@ -449,6 +459,18 @@
             .controls p:first-child {
                 display: none;
             }
+
+            /* MODIFIED: Shrink Game Over/Victory banner on mobile */
+            .game-over, .victory {
+                font-size: clamp(1.1rem, 4vw, 1.4rem) !important;
+                padding: 10px 15px;
+            }
+
+            /* MODIFIED: Restrict height of level selector on mobile */
+            .level-selector-container {
+                max-height: 120px;
+                overflow-y: auto;
+            }
         }
         
         @media (max-width: 480px) {
@@ -456,51 +478,45 @@
                 padding: 5px;
             }
     
-        .game-container {
-            padding: 0 10px;
-            gap: 10px;
-        }
+            .game-container {
+                padding: 0 10px;
+                gap: 10px;
+            }
     
-        .game-info, .controls {
-            padding: 12px;
-        }
+            .game-info, .controls {
+                padding: 12px;
+            }
     
-        .controls {
-            margin-top: 8px;
-        }
+            .controls {
+                margin-top: 8px;
+            }
     
-        .mobile-instructions {
-            margin-top: 6px;
-            padding: 10px;
-        }
+            .mobile-instructions {
+                margin-top: 6px;
+                padding: 10px;
+            }
     
-        /* FIXED: keep buttons in a row on mobile */
-        .game-controls {
-            flex-direction: row;
-            flex-wrap: nowrap;   /* force them to stay in one row */
-            gap: 8px;
-            justify-content: center;
-        }
+            .game-controls {
+                flex-direction: row;
+                flex-wrap: nowrap;
+                gap: 8px;
+                justify-content: center;
+            }
     
-        .restart-btn, .pause-btn {
-            min-width: 100px;   /* slimmer to fit smaller screens */
-            padding: 10px 16px;
-        }
+            .restart-btn, .pause-btn {
+                min-width: 100px;
+                padding: 10px 16px;
+            }
     
-        .toggle-label {
-            font-size: 13px;
+            .toggle-label {
+                font-size: 13px;
+            }
+            
+            .level-info {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
-        
-        .level-info {
-            flex-direction: column;
-            gap: 8px;
-        }
-        
-        .level-selector {
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-    }
         
         @media (max-height: 700px) {
             .game-container {
@@ -533,20 +549,7 @@
         <div class="game-info">
             <h1>Gridlock</h1>
             <div class="status" id="status">Claim squares by completing all 4 edges!</div>
-            <div class="level-info">
-                <div class="level-selector">
-                    <span style="color: #64ffda; font-weight: 600;">Level:</span>
-                    <button class="level-btn active" id="level1" onclick="selectLevel(1)">1</button>
-                    <button class="level-btn" id="level2" onclick="selectLevel(2)" disabled>2</button>
-                    <button class="level-btn" id="level3" onclick="selectLevel(3)" disabled>3</button>
-                    <button class="level-btn" id="level4" onclick="selectLevel(4)" disabled>4</button>
-                    <button class="level-btn" id="level5" onclick="selectLevel(5)" disabled>5</button>
-                    <button class="level-btn" id="level6" onclick="selectLevel(6)" disabled>6</button>
-                    <button class="level-btn" id="level7" onclick="selectLevel(7)" disabled>7</button>
-                    <button class="level-btn" id="level8" onclick="selectLevel(8)" disabled>8</button>
-                </div>
-                <div class="high-score" id="highScore">Best Time: --:--</div>
-            </div>
+            <div class="high-score" id="highScore">Best Time: --:--</div>
         </div>
         
         <div class="game-board" id="gameBoard">
@@ -555,6 +558,21 @@
             <div class="ball enemy-ball" id="enemyBall2"></div>
         </div>
         
+        <!-- MODIFIED: Level selector moved here -->
+        <div class="level-selector-container">
+            <div class="level-selector">
+                <span style="color: #64ffda; font-weight: 600;">Level:</span>
+                <button class="level-btn active" id="level1" onclick="selectLevel(1)">1</button>
+                <button class="level-btn" id="level2" onclick="selectLevel(2)" disabled>2</button>
+                <button class="level-btn" id="level3" onclick="selectLevel(3)" disabled>3</button>
+                <button class="level-btn" id="level4" onclick="selectLevel(4)" disabled>4</button>
+                <button class="level-btn" id="level5" onclick="selectLevel(5)" disabled>5</button>
+                <button class="level-btn" id="level6" onclick="selectLevel(6)" disabled>6</button>
+                <button class="level-btn" id="level7" onclick="selectLevel(7)" disabled>7</button>
+                <button class="level-btn" id="level8" onclick="selectLevel(8)" disabled>8</button>
+            </div>
+        </div>
+
         <div class="mobile-instructions">
             Swipe anywhere on screen to change direction
         </div>
@@ -630,11 +648,8 @@
                 this.color = color;
                 this.wasReversed = false;
                 
-                // Level-based speed calculation
-                // Base speeds reduced by 30%, then increased by 10% per level
-                // Level 4 = original speeds
                 const isMobile = isMobileDevice();
-                const baseSpeedMultiplier = 0.7 + (level - 1) * 0.1; // 0.7 at level 1, 1.0 at level 4
+                const baseSpeedMultiplier = 0.7 + (level - 1) * 0.1;
                 
                 if (color === 'blue') {
                     this.speed = (isMobile ? 1.2 : 2.0) * baseSpeedMultiplier;
@@ -732,31 +747,21 @@
                         
                         this.wasReversed = false;
                         
-                        // =================== START OF THE FIX ===================
-                        // This logic determines what a ball does when it reaches a grid point.
-                        
                         if (this.nextDir) {
-                            // This handles queued moves, mainly for the player.
                             if (this.canMoveTo(this.gridX + this.nextDir.x, this.gridY + this.nextDir.y)) {
                                 this.startMoving(this.nextDir);
                             } else {
                                 this.nextDir = null;
                             }
                         } else if (this.color === 'red') {
-                            // FIXED: If the ball is red, ALWAYS force it to find a new
-                            // random direction when it reaches a grid point.
                             this.forceEnemyMovement();
                         } else {
-                            // This block now only applies to the player's ball.
-                            // It continues moving in the same direction if possible.
                             if (this.canMoveTo(this.gridX + this.dir.x, this.gridY + this.dir.y)) {
                                 this.startMoving(this.dir);
                             } else {
                                 this.dir = { x: 0, y: 0 };
                             }
                         }
-                        // =================== END OF THE FIX =====================
-
                     } else {
                         const moveX = (dx / distance) * this.speed;
                         const moveY = (dy / distance) * this.speed;
@@ -836,11 +841,9 @@
             }
             
             loadGameData() {
-                // Load unlocked levels
                 const unlockedLevels = localStorage.getItem('gridlock_unlocked_levels');
                 this.unlockedLevels = unlockedLevels ? JSON.parse(unlockedLevels) : [1];
                 
-                // Load high scores
                 const highScores = localStorage.getItem('gridlock_high_scores');
                 this.highScores = highScores ? JSON.parse(highScores) : {};
                 
@@ -889,7 +892,6 @@
                 this.updateLevelButtons();
                 this.updateHighScoreDisplay();
                 
-                // Update ball speeds for new level
                 this.player = new Ball(0, 0, 'blue', this.currentLevel);
                 this.enemy1 = new Ball(4, 4, 'red', this.currentLevel);
                 this.enemy2 = new Ball(4, 0, 'red', this.currentLevel);
@@ -1303,7 +1305,6 @@
                 pauseBtn.textContent = 'Pause';
                 pauseBtn.classList.remove('paused');
                 
-                // Reset balls with current level speeds
                 this.player = new Ball(0, 0, 'blue', this.currentLevel);
                 this.enemy1 = new Ball(4, 4, 'red', this.currentLevel);
                 this.enemy2 = new Ball(4, 0, 'red', this.currentLevel);
