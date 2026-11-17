@@ -29,10 +29,11 @@ A professional personal website showcasing Jeff Tuel's experience, projects, and
 - `aiartwork.html` - AI artwork gallery
 - `personazoo.html` - PersonaZoo chat interface
 - `js/` - JavaScript files
-  - `animations.js` - Animations and visual effects
-  - `personas.js` - Persona definitions and system prompts
-  - `openai-chat-auto-unlock.js` - OpenAI API integration with auto-unlock functionality
-- `images/` - Website images and assets
+  - `animations.js` - Animations and visual effects (used by aiartwork.html)
+  - `openai-chat-debug-fixed.js` - OpenAI API integration with auto-unlock functionality (used by personazoo.html; persona definitions live inline in personazoo.html)
+- `css/` - Generated stylesheets
+  - `site.css` - Tailwind CSS build (generated — see Styles below, do not hand-edit)
+- `images/` - Website images and assets (including `jeff-headshot.jpg`, the homepage hero photo)
 - `backup/` - Backup of previous implementation files
 
 ### Technologies Used
@@ -49,7 +50,7 @@ A professional personal website showcasing Jeff Tuel's experience, projects, and
 The PersonaZoo chat feature requires an OpenAI API key to function. The key is stored in encrypted form in the JavaScript code.
 
 To update the API key:
-1. Open `js/openai-chat-auto-unlock.js`
+1. Open `js/openai-chat-debug-fixed.js`
 2. Find the `ENCRYPTED_API_KEY` constant
 3. Replace it with your newly encrypted key (see encryption instructions in the file comments)
 4. Update the `AUTO_UNLOCK_PASSWORD` if needed
@@ -68,6 +69,13 @@ The contact form uses Formspree for processing. To update or troubleshoot:
 - **New projects**: Add to the grid in the Projects section
 - **New AI artwork**: Add images to the gallery in `aiartwork.html`
 - **New personas**: Add definitions to the `personas.js` file
+
+### Styles (Tailwind CSS)
+The site uses a prebuilt Tailwind stylesheet (`css/site.css`) instead of the Tailwind Play CDN. It is generated from the classes used in `index.html` and `aiartwork.html` with the Tailwind CLI v3.4.17 (standalone binary). After changing any Tailwind classes in those pages, rebuild it:
+1. Download the standalone CLI from https://github.com/tailwindlabs/tailwindcss/releases (v3.4.17, `tailwindcss-linux-x64`)
+2. Create `input.css` containing the three `@tailwind` directives (base, components, utilities)
+3. Run: `tailwindcss -i input.css -o css/site.css --content './*.html' --minify`
+4. Commit the regenerated `css/site.css`
 
 ## Deployment
 
