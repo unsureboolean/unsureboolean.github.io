@@ -41,16 +41,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* On phones the backdrop blur makes scrolling stutter, so use a
-       slightly more opaque fill instead. Desktop keeps the glass blur. */
-    @media (max-width: 640px) {
-      .glass-card, .glass-nav {
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        background: rgba(255, 255, 255, 0.14);
-      }
-    }
-
     /* Glassmorphism card styles */
     .glass-card {
       background: rgba(255, 255, 255, 0.1);
@@ -360,6 +350,17 @@
     @keyframes blink {
       0%, 50% { border-color: #60a5fa; }
       51%, 100% { border-color: transparent; }
+    }
+    /* On phones the backdrop blur makes scrolling stutter, so use a
+       slightly more opaque fill instead. Desktop keeps the glass blur.
+       Must stay at the end of the stylesheet so it wins over the
+       .glass-card / .glass-nav rules above. */
+    @media (max-width: 640px) {
+      .glass-card, .glass-nav {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        background: rgba(255, 255, 255, 0.14);
+      }
     }
   </style>
 </head>
